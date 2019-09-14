@@ -4,7 +4,7 @@ using System.Linq;
 using ShoppingCart.ApplicationCore.PurchaseOrder.Domain;
 using Xunit;
 
-namespace PurchaseOrderDomain.Test
+namespace ShoppingCart.ApplicationCoreTests.PurchaseOrder
 {
     public class PurchaseOrderDomainTest
     {
@@ -15,7 +15,7 @@ namespace PurchaseOrderDomain.Test
         }
 
         [Fact]
-        public void Purchase_Order_WithOut_Proper_Id_Should_Throw_fArgumentNullException()
+        public void NewPurchaseOrderCreatedEvent_Should_Raised_When_Purchase_Order_Created()
         {
             var address = new Address("street", "city", "state", "country", "zipcode");
             var purchasedItem = new List<PurchaseOrderItem>()
@@ -25,7 +25,7 @@ namespace PurchaseOrderDomain.Test
                         "ProductName", "PictureUri"), 5.0M, 5)
             };
 
-            var purchaseOrder = new PurchaseOrder(Guid.NewGuid(), "buyerId", address, purchasedItem);
+            var purchaseOrder = new ApplicationCore.PurchaseOrder.Domain.PurchaseOrder(Guid.NewGuid(), "buyerId", address, purchasedItem);
             var eventObj = purchaseOrder.UnCommittedEvents.FirstOrDefault();
             Assert.Equal("NewPurchaseOrderCreatedEvent", eventObj.GetType().Name);
             Assert.Single(purchaseOrder.UnCommittedEvents);

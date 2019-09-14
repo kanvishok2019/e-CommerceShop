@@ -39,13 +39,6 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Domain
 
             Id = newPurchaseOrderCreatedEvent.Id;
         }
-
-
-        //public async Task ProcessOrderAsync(Guid basketId, Address shippingAddress)
-        //{
-
-        //}
-
     }
     public class NewPurchaseOrderCreatedEvent : VersionedEvent
     {

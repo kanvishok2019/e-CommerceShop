@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29021.104
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.705
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShoppingCart.Web", "ShoppingCart.Web\ShoppingCart.Web.csproj", "{64D2355C-6ED8-40D7-9278-62FD0F059572}"
 EndProject
@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.Core", "Infr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.Data", "Infrastructure.Data\Infrastructure.Data.csproj", "{9472882E-416C-449A-A568-68C4E3E31802}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShoppingCart.PurchaseOrder.Api", "ShoppingCart.PurchaseOrder.Api\ShoppingCart.PurchaseOrder.Api.csproj", "{F8095270-6634-4AE0-8990-50283A7DCCC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShoppingCart.Api", "ShoppingCart.PurchaseOrder.Api\ShoppingCart.Api.csproj", "{F8095270-6634-4AE0-8990-50283A7DCCC5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ShoppingCart", "ShoppingCart", "{D8C411F1-9290-4989-9AB5-CDAAF19DDFEE}"
 EndProject
@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShoppingCart.ApplicationCor
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PurchaseOrder", "PurchaseOrder", "{3BE6A157-0F0B-4C66-A8CD-933D2F7DA5C9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PurchaseOrderDomain.Test", "PurchaseOrder.Domain.Test\PurchaseOrderDomain.Test.csproj", "{043E691D-3697-40F6-9EF0-468945F2E868}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShoppingCart.ApplicationCoreTests", "PurchaseOrder.Domain.Test\ShoppingCart.ApplicationCoreTests.csproj", "{043E691D-3697-40F6-9EF0-468945F2E868}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
