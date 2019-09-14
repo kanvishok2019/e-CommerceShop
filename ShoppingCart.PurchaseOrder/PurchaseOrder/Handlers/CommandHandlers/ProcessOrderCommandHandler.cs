@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Infrastructure.Core.Command;
-using ShoppingCart.PurchaseOrder.Commands;
+using ShoppingCart.ApplicationCore.PurchaseOrder.Commands;
 
-namespace ShoppingCart.PurchaseOrder.Handlers.CommandHandlers
+namespace ShoppingCart.ApplicationCore.PurchaseOrder.Handlers.CommandHandlers
 {
     public class ProcessOrderCommandHandler:ICommandHandler<ProcessOrderCommand>
     {

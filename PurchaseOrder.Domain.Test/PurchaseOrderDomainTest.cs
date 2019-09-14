@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ShoppingCart.PurchaseOrder.Domain;
+using ShoppingCart.ApplicationCore.PurchaseOrder.Domain;
 using Xunit;
 
 namespace PurchaseOrderDomain.Test

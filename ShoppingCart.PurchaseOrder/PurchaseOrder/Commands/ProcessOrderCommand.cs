@@ -1,8 +1,8 @@
 ﻿using System;
 using Infrastructure.Core.Command;
-using ShoppingCart.PurchaseOrder.Domain;
+using ShoppingCart.ApplicationCore.PurchaseOrder.Domain;
 
-namespace ShoppingCart.PurchaseOrder.Commands
+namespace ShoppingCart.ApplicationCore.PurchaseOrder.Commands
 {
     public class ProcessOrderCommand : Command
     {

@@ -4,7 +4,7 @@ using System.Text;
 using Ardalis.GuardClauses;
 using Infrastructure.Core.Domain;
 
-namespace ShoppingCart.PurchaseOrder.Domain
+namespace ShoppingCart.ApplicationCore.PurchaseOrder.Domain
 {
     public class CatalogItemOrdered : BaseEntity
     {

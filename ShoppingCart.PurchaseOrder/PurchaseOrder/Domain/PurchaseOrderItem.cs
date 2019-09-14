@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Infrastructure.Core.Domain;
 
-namespace ShoppingCart.PurchaseOrder.Domain
+namespace ShoppingCart.ApplicationCore.PurchaseOrder.Domain
 {
     public class PurchaseOrderItem : BaseEntity
     {

@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Ardalis.GuardClauses;
 using Infrastructure.Core.Domain;
 using Infrastructure.Core.Event;
 
-namespace ShoppingCart.PurchaseOrder.Domain
+namespace ShoppingCart.ApplicationCore.PurchaseOrder.Domain
 {
     public sealed class PurchaseOrder : AggregateRoot
     {

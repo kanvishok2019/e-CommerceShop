@@ -1,4 +1,4 @@
-﻿namespace ShoppingCart.PurchaseOrder.Domain
+﻿namespace ShoppingCart.ApplicationCore.PurchaseOrder.Domain
 {
     public enum CatalogItemType
     {

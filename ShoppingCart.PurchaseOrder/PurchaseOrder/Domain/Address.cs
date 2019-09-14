@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace ShoppingCart.PurchaseOrder.Domain
+namespace ShoppingCart.ApplicationCore.PurchaseOrder.Domain
 {
     public class Address  
     {
