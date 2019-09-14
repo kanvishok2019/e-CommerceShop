@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Infrastructure.Core.Event
 {
-    public interface IVersionedEvent
+    public interface IVersionedEvent:IEvent
     {
         string EntityId { get; }
         string EntityType { get; }

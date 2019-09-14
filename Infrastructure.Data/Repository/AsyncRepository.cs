@@ -33,6 +33,11 @@ namespace Infrastructure.Data.Repository
             return await ApplySpecification(spec).ToListAsync();
         }
 
+        public async Task AddAllAsync(List<T> entities)
+        {
+           await _dbContext.Set<T>().AddRangeAsync(entities);
+        }
+
         public async Task<int> CountAsync(ISpecification<T> spec)
         {
             return await ApplySpecification(spec).CountAsync();

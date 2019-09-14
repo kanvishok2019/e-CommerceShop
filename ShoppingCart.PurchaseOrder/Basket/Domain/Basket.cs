@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace ShoppingCart.ApplicationCore.Basket.Domain
 {
-    public class Basket : AggregateRoot
+    public sealed class Basket : AggregateRoot
     {
         public Basket(Guid id, string buyerId) : base(id)
         {
