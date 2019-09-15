@@ -20,6 +20,8 @@ namespace Infrastructure.Data.Repository
                 query = query.Where(specification.Criteria);
             }
 
+           
+
             // Includes all expression-based includes
             query = specification.Includes.Aggregate(query,
                 (current, include) => current.Include(include));

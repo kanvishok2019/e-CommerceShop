@@ -14,9 +14,9 @@ namespace Infrastructure.Core.Query
             _queryHandlers = new Dictionary<Type, IQueryHandler>();
         }
 
-        public  Task SubscribeAsync<TQuery, TResult>(IQueryHandler<TQuery, TResult> queryHandler) where TQuery : class, IQuery<TResult>
+        public async Task SubscribeAsync<TQuery, TResult>(IQueryHandler<TQuery, TResult> queryHandler) where TQuery : class, IQuery<TResult>
         {
-            return Task.Run(() =>
+            await Task.Run(() =>
             {
                 if (queryHandler == null)
                 {

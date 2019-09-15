@@ -31,11 +31,12 @@ namespace FunctionalTest
                     options.UseInternalServiceProvider(provider);
                 }).AddUnitOfWork<ShopDbContext>();
 
-                services.AddDbContext<EventStoreDbContext>(options =>
-                {
-                    options.UseInMemoryDatabase("EventStoreDb");
-                    options.UseInternalServiceProvider(provider);
-                }).AddUnitOfWork<EventStoreDbContext>();
+                //services.AddDbContext<EventStoreDbContext>(options =>
+                //{
+                //    options.UseInMemoryDatabase("EventStoreDb");
+                //    options.UseInternalServiceProvider(provider);
+                //}).AddUnitOfWork<EventStoreDbContext>();
+
                 var sp = services.BuildServiceProvider();
 
             });

@@ -61,7 +61,7 @@ namespace ShoppingCart.PurchaseOrder.Api.Controllers
 
         // PUT api/values/5
         //[HttpPut("add-item-to-basket/{id}", Name = "add-item-to-basket")]
-        [HttpPut("{id}")]
+        [HttpPut("{basketId}")]
         public async Task Put([FromBody] BasketItemModel basketItemModel)
         {
             var addItemToBasketCommand = _autoMapper.Map<BasketItemModel, AddItemToBasketCommand>(basketItemModel);

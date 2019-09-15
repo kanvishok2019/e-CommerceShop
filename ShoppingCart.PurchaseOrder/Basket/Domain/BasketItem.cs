@@ -1,4 +1,5 @@
-﻿using Infrastructure.Core.Domain;
+﻿using System;
+using Infrastructure.Core.Domain;
 
 namespace ShoppingCart.ApplicationCore.Basket.Domain
 {
@@ -7,6 +8,6 @@ namespace ShoppingCart.ApplicationCore.Basket.Domain
         public decimal UnitPrice { get; set; }
         public int Quantity { get; set; }
         public int CatalogItemId { get; set; }
-        public int BasketId { get; private set; }
+        public Guid BasketId { get; private set; }
     }
 }

@@ -14,10 +14,10 @@ namespace Infrastructure.Core.Command
             _commandHandlers = new Dictionary<Type, ICommandHandler>(); 
         }
 
-        public Task SubscribeAsync<TCommand>(ICommandHandler<TCommand> commandHandler)
+        public async Task SubscribeAsync<TCommand>(ICommandHandler<TCommand> commandHandler)
             where TCommand : class, ICommand
         {
-            return Task.Run(() =>
+            await Task.Run(() =>
             {
                 if (commandHandler == null)
                 {

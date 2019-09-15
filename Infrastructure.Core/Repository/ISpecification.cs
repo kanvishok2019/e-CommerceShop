@@ -8,6 +8,7 @@ namespace Infrastructure.Core.Repository
     public interface ISpecification<T>
     {
         Expression<Func<T, bool>> Criteria { get; }
+       // Expression<Func<T, object>> Select { get; }
         List<Expression<Func<T, object>>> Includes { get; }
         List<string> IncludeStrings { get; }
         Expression<Func<T, object>> OrderBy { get; }

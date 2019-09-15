@@ -47,8 +47,9 @@ namespace ShoppingCart.Api
         {
             services.AddDbContext<ShopDbContext>(c =>
                 c.UseInMemoryDatabase("Shop")).AddUnitOfWork<ShopDbContext>();
-            services.AddDbContext<EventStoreDbContext>(c =>
-                c.UseInMemoryDatabase("EventStore")).AddUnitOfWork<EventStoreDbContext>();
+
+            //services.AddDbContext<EventStoreDbContext>(c =>
+            //    c.UseInMemoryDatabase("EventStore")).AddUnitOfWork<EventStoreDbContext>();
 
             ConfigureServices(services);
         }
@@ -58,9 +59,9 @@ namespace ShoppingCart.Api
                     c.UseSqlServer(Configuration.GetConnectionString("ShopContextConnection")))
                 .AddUnitOfWork<ShopDbContext>();
 
-            services.AddDbContext<EventStoreDbContext>(c =>
-                    c.UseSqlServer(Configuration.GetConnectionString("EventStoreContextConnection")))
-                .AddUnitOfWork<EventStoreDbContext>();
+            //services.AddDbContext<EventStoreDbContext>(c =>
+            //        c.UseSqlServer(Configuration.GetConnectionString("EventStoreContextConnection")))
+            //    .AddUnitOfWork<EventStoreDbContext>();
 
             ConfigureServices(services);
         }
@@ -75,37 +76,39 @@ namespace ShoppingCart.Api
 
             services.AddTransient<Func<ITextSerializer>>(container =>
                 container.GetService<ITextSerializer>);
-            services.AddScoped(typeof(IAsyncRepository<>), typeof(AsyncRepository<>));
+            services.AddTransient(typeof(IAsyncRepository<>), typeof(AsyncRepository<>));
             services.AddScoped(typeof(IAggregateRepositoryService<>), typeof(AggregateRepositoryService<>));
             
             //Command
-            services.AddTransient<ICommandHandler<AddItemToBasketCommand>, AddItemToBasketHandler>();
-            services.AddTransient<ICommandHandler<CreateBasketForUserCommand>, CreateBasketForUserCommandHandler>();
-            services.AddTransient<ICommandBus>(container =>
+            services.AddScoped<ICommandHandler<AddItemToBasketCommand>, AddItemToBasketHandler>();
+            services.AddScoped<ICommandHandler<CreateBasketForUserCommand>, CreateBasketForUserCommandHandler>();
+            services.AddScoped<ICommandBus>(container =>
             {
                 var commandBus = new CommandBus();
-                commandBus.SubscribeAsync(container.GetService<ICommandHandler<CreateBasketForUserCommand>>());
-                commandBus.SubscribeAsync(container.GetService<ICommandHandler<AddItemToBasketCommand>>());
+                commandBus.SubscribeAsync(container.GetService<ICommandHandler<CreateBasketForUserCommand>>()).Wait();
+                commandBus.SubscribeAsync(container.GetService<ICommandHandler<AddItemToBasketCommand>>()).Wait();
                 return commandBus;
             });
 
             //Event
-            services.AddTransient<IEventHandler<BasketCreatedEvent>, BasketViewModelGenerator>();
-            services.AddTransient<IEventBus>(container =>
+            services.AddScoped<IEventHandler<BasketCreatedEvent>, BasketViewModelGenerator>();
+            services.AddScoped<IEventHandler<ItemAddedToBasketEvent>, BasketItemAddedViewModelGenerator>();
+            services.AddScoped<IEventBus>(container =>
             {
                 var eventBus = new EventBus();
-                eventBus.SubscribeAsync(container.GetService<IEventHandler<BasketCreatedEvent>>());
+                eventBus.SubscribeAsync(container.GetService<IEventHandler<BasketCreatedEvent>>()).Wait();
+                eventBus.SubscribeAsync(container.GetService<IEventHandler<ItemAddedToBasketEvent>>()).Wait();
                 return eventBus;
             });
 
             //Query
-            services.AddTransient<IQueryHandler<GetBasketByBuyerId,
+            services.AddScoped<IQueryHandler<GetBasketByBuyerId,
                 ApplicationCore.Basket.Query.ViewModel.Basket>, BasketQueryHandlers>();
-            services.AddTransient<BasketQueryHandlers>();
-            services.AddTransient<IQueryBus>(container =>
+            services.AddScoped<BasketQueryHandlers>();
+            services.AddScoped<IQueryBus>(container =>
             {
                 var queryBus = new QueryBus();
-                queryBus.SubscribeAsync(container.GetService<IQueryHandler<GetBasketByBuyerId, ApplicationCore.Basket.Query.ViewModel.Basket>>());
+                queryBus.SubscribeAsync(container.GetService<IQueryHandler<GetBasketByBuyerId, ApplicationCore.Basket.Query.ViewModel.Basket>>()).Wait();
                 return queryBus;
             });
 
@@ -116,14 +119,6 @@ namespace ShoppingCart.Api
             });
             var mapper = config.CreateMapper();
             services.AddSingleton(mapper);
-
-            services.AddTransient<IEventBus>(container =>
-            {
-                var eventBus = new EventBus();
-
-                return eventBus;
-            });
-
         }
 
 

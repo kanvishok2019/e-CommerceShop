@@ -3,6 +3,7 @@ using Infrastructure.Core.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Infrastructure.Core.Event;
 using ShoppingCart.ApplicationCore.Basket.Events;
 
 namespace ShoppingCart.ApplicationCore.Basket.Domain
@@ -17,7 +18,10 @@ namespace ShoppingCart.ApplicationCore.Basket.Domain
             AddEvent(new BasketCreatedEvent(id, buyerId));
 
         }
-
+        public Basket(Guid id, IEnumerable<IVersionedEvent> eventsHistory) : base(id)
+        {
+            ApplyUpdate(eventsHistory);
+        }
         public Guid Id { get; private set; }
         public string BuyerId { get; private set; }
         private readonly List<BasketItem> _items = new List<BasketItem>();
@@ -27,17 +31,18 @@ namespace ShoppingCart.ApplicationCore.Basket.Domain
         {
             if (Items.All(item => item.CatalogItemId != catalogItemId))
             {
-                _items.Add(new BasketItem
+                var item = new BasketItem
                 {
                     CatalogItemId = catalogItemId,
                     Quantity = quantity,
                     UnitPrice = unitPrice
-                });
+                };
+                _items.Add(item);
+                AddEvent(new ItemAddedToBasketEvent(Id, item));
                 return;
             }
-
             var existingItem = Items.FirstOrDefault(i => i.CatalogItemId == catalogItemId);
-            existingItem.Quantity += quantity;
+            if (existingItem != null) existingItem.Quantity += quantity;
         }
 
 
@@ -48,14 +53,19 @@ namespace ShoppingCart.ApplicationCore.Basket.Domain
 
         private void OnBasketCreatedEvent(BasketCreatedEvent basketCreatedEvent)
         {
-
             if (basketCreatedEvent == null)
             {
                 return;
             }
-            Id = basketCreatedEvent.Id;
+            Id = basketCreatedEvent.BasketId;
             BuyerId = basketCreatedEvent.BuyerId;
+        }
 
+        private void OnItemAddedToBasketEvent(ItemAddedToBasketEvent itemAddedToBasketEvent)
+        {
+            if (itemAddedToBasketEvent == null)
+                return;
+            _items.Add(itemAddedToBasketEvent.BasketItem);
         }
     }
 }

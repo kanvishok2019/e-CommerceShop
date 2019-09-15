@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
+using Infrastructure.Core.Event;
 
 namespace Infrastructure.Core.Repository
 {
@@ -10,8 +11,10 @@ namespace Infrastructure.Core.Repository
         protected BaseSpecification(Expression<Func<T, bool>> criteria)
         {
             Criteria = criteria;
+
         }
         public Expression<Func<T, bool>> Criteria { get; }
+      //  public Expression<Func<T, object>> Select { get; private set; }
         public List<Expression<Func<T, object>>> Includes { get; } = new List<Expression<Func<T, object>>>();
         public List<string> IncludeStrings { get; } = new List<string>();
         public Expression<Func<T, object>> OrderBy { get; private set; }
@@ -36,6 +39,11 @@ namespace Infrastructure.Core.Repository
             Take = take;
             IsPagingEnabled = true;
         }
+
+        //protected virtual void ApplySelect(Func<T, object> @select)
+        //{
+        //    Select = Expression<@select>;
+        //}
         protected virtual void ApplyOrderBy(Expression<Func<T, object>> orderByExpression)
         {
             OrderBy = orderByExpression;

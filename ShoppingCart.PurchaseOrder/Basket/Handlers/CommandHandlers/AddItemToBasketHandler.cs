@@ -20,8 +20,8 @@ namespace ShoppingCart.ApplicationCore.Basket.Handlers.CommandHandlers
         public async Task HandleAsync(AddItemToBasketCommand command)
         {
             //Assumptions: Stock Of Product is Available
-
-            var basket = new Domain.Basket(Guid.NewGuid(), "buyerId");
+            var basket = await _shopAggregateRepositoryService.GetAsync<Guid>(command.BasketId);
+            basket.AddItem(command.CatalogItemId,command.Price,command.Quantity);
             await _shopAggregateRepositoryService.SaveAsync(basket);
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Infrastructure.Core;
@@ -24,12 +25,37 @@ namespace Infrastructure.Data.Repository
             _eventStoreRepositoryService = _unitOfWork.GetRepositoryAsync<EventStore>();
             _textSerializer = textSerializer;
             _eventBus = eventBus;
-            
+
         }
 
-        public Task<T> GetAsync<TKey>(TKey aggregateRootKey) where TKey : struct
+        public async Task<T> GetAsync<TKey>(TKey aggregateRootKey) where TKey : struct
         {
-            throw new NotImplementedException();
+           return await Task.Run(() =>
+              {
+                  var eventStoreSpecification = new EventStoreSpecification(aggregateRootKey.ToString(), typeof(T).Name);
+                  var eventHistoryList = new List<IVersionedEvent>();
+                  foreach (var eventHistory in _eventStoreRepositoryService.ListAllAsync().Result)
+                  {
+                      eventHistoryList.Add(Deserialize(eventHistory));
+                  }
+
+                  if (eventHistoryList.Any())
+                  {
+                      var aggregateConstructFactory =
+                          typeof(T).GetConstructor(new[] { typeof(TKey), typeof(IEnumerable<IVersionedEvent>) });
+                      if (aggregateConstructFactory != null)
+                      {
+                          return (T)aggregateConstructFactory.Invoke(new object[] { aggregateRootKey, eventHistoryList });
+                      }
+                  }
+
+                  return null;
+
+              });
+        }
+        private IVersionedEvent Deserialize(EventStore versionedEvent)
+        {
+            return (IVersionedEvent)_textSerializer.Deserialize(versionedEvent.Payload);
         }
 
         public Task Remove<TKey>(TKey aggregateRootKey) where TKey : struct

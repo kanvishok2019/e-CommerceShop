@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -11,29 +10,24 @@ using ShoppingCart.ApplicationCore.Basket.Query.ViewModel;
 
 namespace ShoppingCart.ApplicationCore.Basket.Handlers.ViewModelGenerators
 {
-    public class BasketViewModelGenerator : IEventHandler<BasketCreatedEvent>
+    public class BasketItemAddedViewModelGenerator : IEventHandler<ItemAddedToBasketEvent>
     {
-        private readonly IAsyncRepository<Query.ViewModel.Basket> _basketAsyncRepository;
+        private readonly IAsyncRepository<Query.ViewModel.BasketItem> _basketItemAsyncRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _autoMapper;
 
-        public BasketViewModelGenerator(IUnitOfWork unitOfWork, IMapper autoMapper)
+        public BasketItemAddedViewModelGenerator(IUnitOfWork unitOfWork, IMapper autoMapper)
         {
             _unitOfWork = unitOfWork;
             _autoMapper = autoMapper;
-            _basketAsyncRepository = _unitOfWork.GetRepositoryAsync<Query.ViewModel.Basket>();
+            _basketItemAsyncRepository = _unitOfWork.GetRepositoryAsync<Query.ViewModel.BasketItem>();
         }
 
-        public async Task HandleAsync(BasketCreatedEvent @event)
+        public async Task HandleAsync(ItemAddedToBasketEvent @event)
         {
-            await _basketAsyncRepository.AddAsync(new Query.ViewModel.Basket
-            {
-                BasketId = @event.BasketId,
-                BuyerId = @event.BuyerId
-            });
+            var basketItem = _autoMapper.Map<Domain.BasketItem, BasketItem>(@event.BasketItem);
+            await _basketItemAsyncRepository.AddAsync(basketItem);
             await _unitOfWork.SaveChangesAsync();
         }
-
-
     }
 }

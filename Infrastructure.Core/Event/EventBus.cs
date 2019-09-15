@@ -16,9 +16,9 @@ namespace Infrastructure.Core.Event
             _eventHandlers = new Dictionary<Type, IList<IEventHandler>>();
         }
 
-        public Task SubscribeAsync<TEvent>(IEventHandler<TEvent> eventHandler) where TEvent : class, IEvent
+        public async Task SubscribeAsync<TEvent>(IEventHandler<TEvent> eventHandler) where TEvent : class, IEvent
         {
-            return Task.Run(() =>
+            await Task.Run(() =>
             {
                 if (eventHandler == null)
                 {

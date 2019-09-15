@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using ShoppingCart.Api.Models;
 using ShoppingCart.ApplicationCore.Basket.Commands;
+using ShoppingCart.ApplicationCore.Basket.Query.ViewModel;
 
 namespace ShoppingCart.Api.Configurators
 {
@@ -16,6 +17,7 @@ namespace ShoppingCart.Api.Configurators
             ShouldMapProperty = propertyInfo => true;
             CreateMap<BasketItemModel, AddItemToBasketCommand>();
             CreateMap<CreateBasketModel, CreateBasketForUserCommand>();
+            CreateMap<ShoppingCart.ApplicationCore.Basket.Domain.Basket, Basket>();
         }
     }
 }
