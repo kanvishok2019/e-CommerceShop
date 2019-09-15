@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Infrastructure.Core.Domain;
+using Infrastructure.Core.Event;
 
 namespace Infrastructure.Core.Repository
 {
@@ -13,5 +14,8 @@ namespace Infrastructure.Core.Repository
         Task Remove<TKey>(TKey aggregateRootKey)
             where TKey : struct;
         Task SaveAsync(T aggregate);
+        Task SaveAllEvents(IList<IVersionedEvent> domainEvents, ITextSerializer textSerializer);
+        Task SaveEvent(IVersionedEvent versionedEvent, ITextSerializer textSerializer);
+        Task PublishAllUncommittedEvents(Queue<IVersionedEvent> unCommittedEvents);
     }
 }

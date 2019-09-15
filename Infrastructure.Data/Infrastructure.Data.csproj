@@ -7,5 +7,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Infrastructure.Core\Infrastructure.Core.csproj" />
+    <ProjectReference Include="..\ShoppingCart.PurchaseOrder\ShoppingCart.ApplicationCore.csproj" />
   </ItemGroup>
 </Project>

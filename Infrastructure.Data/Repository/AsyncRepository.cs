@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data.Repository
 {
-    public class EfRepository<T> : IAsyncRepository<T> where T : BaseEntity
+    public class AsyncRepository<T> : IAsyncRepository<T> where T : BaseEntity
     {
-        protected readonly ShopContext _dbContext;
+        protected readonly DbContext _dbContext;
 
-        public EfRepository(ShopContext dbContext)
+        public AsyncRepository(DbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -21,6 +21,11 @@ namespace Infrastructure.Data.Repository
         public virtual async Task<T> GetByIdAsync(int id)
         {
             return await _dbContext.Set<T>().FindAsync(id);
+        }
+
+        public async Task<T> GetSingleAsync(ISpecification<T> spec)
+        {
+            return await ApplySpecification(spec).SingleAsync();
         }
 
         public async Task<IReadOnlyList<T>> ListAllAsync()
@@ -46,21 +51,17 @@ namespace Infrastructure.Data.Repository
         public async Task<T> AddAsync(T entity)
         {
             _dbContext.Set<T>().Add(entity);
-            await _dbContext.SaveChangesAsync();
-
             return entity;
         }
 
         public async Task UpdateAsync(T entity)
         {
-            _dbContext.Entry(entity).State = EntityState.Modified;
-            await _dbContext.SaveChangesAsync();
+            await Task.Run(() => { _dbContext.Entry(entity).State = EntityState.Modified; });
         }
 
         public async Task DeleteAsync(T entity)
         {
-            _dbContext.Set<T>().Remove(entity);
-            await _dbContext.SaveChangesAsync();
+             await Task.Run(() => { _dbContext.Set<T>().Remove(entity); });
         }
 
         private IQueryable<T> ApplySpecification(ISpecification<T> spec)

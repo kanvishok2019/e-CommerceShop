@@ -12,17 +12,15 @@ namespace Infrastructure.Tests.Command
         [Fact]
         public async Task When_The_Input_Command_Is_Null_Throw_ArgumentNullException()
         {
-            Dictionary<Type, ICommandHandler> commandHandlers = null;
-            CommandHandler commandHandler = null;
-            var commandBus = new CommandBus(commandHandlers);
-            await Assert.ThrowsAsync<ArgumentNullException>(() => commandBus.SubscribeAsync(commandHandler));
+             var commandBus = new CommandBus();
+            await Assert.ThrowsAsync<ArgumentNullException>(() => commandBus.SubscribeAsync((CommandHandler) null));
         }
 
         [Fact]
         public async Task When_The_Input_Same_CommandHandler_Should_Throw_InvalidOperationException()
         {
             Dictionary<Type, ICommandHandler> commandHandlers = new Dictionary<Type, ICommandHandler>();
-            var commandBus = new CommandBus(commandHandlers);
+            var commandBus = new CommandBus();
             CommandHandler commandHandler = new CommandHandler();
             await commandBus.SubscribeAsync(commandHandler);
             await Assert.ThrowsAsync<InvalidOperationException>(() => commandBus.SubscribeAsync(commandHandler));
@@ -32,7 +30,7 @@ namespace Infrastructure.Tests.Command
         public async Task SendAsync_Should_Handle_The_HandleAsync()
         {
             Dictionary<Type, ICommandHandler> commandHandlers = new Dictionary<Type, ICommandHandler>();
-            var commandBus = new CommandBus(commandHandlers);
+            var commandBus = new CommandBus();
             CommandHandler commandHandler = new CommandHandler();
             await commandBus.SubscribeAsync(commandHandler);
             var testCommand = new TestCommand();

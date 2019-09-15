@@ -2,21 +2,23 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using Infrastructure.Core.EventStore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data
 {
-   public class ShopContext:DbContext
+    public class EventStoreDbContext: DbContext
     {
-        public ShopContext(DbContextOptions<ShopContext> options) : base(options)
+        public EventStoreDbContext(DbContextOptions<EventStoreDbContext> options) : base(options)
         {
 
         }
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             builder.ApplyConfigurationsFromAssembly(Assembly.GetEntryAssembly());
         }
+
+        public DbSet<EventStore> EventStores { get; set; }
     }
 }

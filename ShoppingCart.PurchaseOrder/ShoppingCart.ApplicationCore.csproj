@@ -9,9 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Basket\Events\" />
     <Folder Include="Basket\Handlers\EventHandlers\" />
-    <Folder Include="Basket\Handlers\ViewModelGenerators\" />
     <Folder Include="PurchaseOrder\Events\" />
     <Folder Include="PurchaseOrder\Handlers\EventHandlers\" />
     <Folder Include="PurchaseOrder\Handlers\ViewModelGenerators\" />

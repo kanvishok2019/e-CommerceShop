@@ -9,9 +9,9 @@ namespace Infrastructure.Core.Command
     {
         private readonly IDictionary<Type, ICommandHandler> _commandHandlers;
 
-        public CommandBus(IDictionary<Type, ICommandHandler> commandHandlers)
+        public CommandBus()
         {
-            _commandHandlers = commandHandlers;
+            _commandHandlers = new Dictionary<Type, ICommandHandler>(); 
         }
 
         public Task SubscribeAsync<TCommand>(ICommandHandler<TCommand> commandHandler)

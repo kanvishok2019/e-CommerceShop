@@ -1,9 +1,9 @@
 ﻿using Ardalis.GuardClauses;
 using Infrastructure.Core.Domain;
-using Infrastructure.Core.Event;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ShoppingCart.ApplicationCore.Basket.Events;
 
 namespace ShoppingCart.ApplicationCore.Basket.Domain
 {
@@ -57,17 +57,5 @@ namespace ShoppingCart.ApplicationCore.Basket.Domain
             BuyerId = basketCreatedEvent.BuyerId;
 
         }
-    }
-
-    public class BasketCreatedEvent : VersionedEvent
-    {
-        public BasketCreatedEvent(Guid id, string buyerId)
-        {
-            Id = id;
-            BuyerId = buyerId;
-        }
-        public Guid Id { get; }
-        public string BuyerId { get; }
-
     }
 }

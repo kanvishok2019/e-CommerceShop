@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Infrastructure.Core.Domain;
 
 namespace Infrastructure.Core.EventStore
 {
-    public class EventStore
+    public class EventStore : BaseEntity
     {
         public Int64 Id { get; set; }
         public string AggregateId { get; set; }

@@ -3,16 +3,26 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Infrastructure.Core.Command;
+using Infrastructure.Core.Repository;
 using ShoppingCart.ApplicationCore.Basket.Commands;
 
 namespace ShoppingCart.ApplicationCore.Basket.Handlers.CommandHandlers
 {
-    public class AddItemToBasketHandler:ICommandHandler<AddItemToBasketCommand>
+    public class AddItemToBasketHandler : ICommandHandler<AddItemToBasketCommand>
     {
-        public Task HandleAsync(AddItemToBasketCommand command)
+        private readonly IAggregateRepositoryService<Domain.Basket> _shopAggregateRepositoryService;
+
+        public AddItemToBasketHandler(IAggregateRepositoryService<Domain.Basket> basketAggregateRepositoryService)
+        {
+            _shopAggregateRepositoryService = basketAggregateRepositoryService;
+        }
+
+        public async Task HandleAsync(AddItemToBasketCommand command)
         {
             //Assumptions: Stock Of Product is Available
-            return Task.FromResult("");
+
+            var basket = new Domain.Basket(Guid.NewGuid(), "buyerId");
+            await _shopAggregateRepositoryService.SaveAsync(basket);
         }
     }
 }
