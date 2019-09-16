@@ -12,12 +12,11 @@ namespace FunctionalTest
 {
     public class PurchaseOrderTests : IClassFixture<ShopWebApplicationFactory<Startup>>
     {
-        private readonly CreateBasketModel _basketModel;
         
         public HttpClient Client { get; }
         public PurchaseOrderTests(ShopWebApplicationFactory<Startup> factory)
         {
-            _basketModel = new CreateBasketModel { BuyerId = 12345 };
+           
             
             Client = factory.CreateClient(new WebApplicationFactoryClientOptions
             {
@@ -28,6 +27,7 @@ namespace FunctionalTest
         [Fact]
         public async Task Order_Should_Process_Basket()
         {
+            var _basketModel = new CreateBasketModel { BuyerId = 5 }; 
             //Crate Basket
             var response = await Client.PostAsJsonAsync("/api/basket/", _basketModel);
             response.EnsureSuccessStatusCode();
@@ -41,17 +41,14 @@ namespace FunctionalTest
             var addBasketModel = new BasketITemPostModel
             {
                 BasketId = basket.BasketId,
-                CatalogItemId = 1,
+                CatalogItemId = 2,
                 Quantity = 5M,
                 Price = 10.25M
             };
 
             var itemAddedResponse = await Client.PutAsJsonAsync("/api/basket/" + addBasketModel.BasketId, addBasketModel);
             itemAddedResponse.EnsureSuccessStatusCode();
-            //var afterItemAddedResponse = await Client.GetAsync("api/basket/" + _basketModel.BuyerId);
-            //afterItemAddedResponse.EnsureSuccessStatusCode();
-            //basket = await afterItemAddedResponse.Content.ReadAsAsync<Basket>();
-
+           
             //Process Basket
             var purchaseOrderModel = new PurchaseOrderModel{BasketId = basket.BasketId.ToString()};
             var crateProcessOrderResponse = await Client.PostAsJsonAsync("/api/purchase-orders/", purchaseOrderModel);

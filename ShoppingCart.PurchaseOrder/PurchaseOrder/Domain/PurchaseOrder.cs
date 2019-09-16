@@ -13,7 +13,7 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Domain
     public sealed class PurchaseOrder : AggregateRoot
     {
         private readonly IDictionary<CatalogItemType, Action<List<PurchaseOrderItem>>> _processors;
-        private readonly List<PurchaseOrderItem> _orderItems;
+        private List<PurchaseOrderItem> _orderItems;
 
         public PurchaseOrder(Guid id, int purchaseOderNo, int buyerId, Address addressToShip,
             List<PurchaseOrderItem> items) : base(id)
@@ -30,7 +30,7 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Domain
             AddressToShip = addressToShip;
             _orderItems = items;
             _processors = new Dictionary<CatalogItemType, Action<List<PurchaseOrderItem>>>();
-            AddEvent(new NewPurchaseOrderCreatedEvent(id, purchaseOderNo, _orderItems));
+            AddEvent(new NewPurchaseOrderCreatedEvent(BuyerId, id, purchaseOderNo, _orderItems));
         }
 
         public PurchaseOrder(Guid id, IEnumerable<IVersionedEvent> eventsHistory) : base(id)
@@ -43,7 +43,7 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Domain
         public Guid Id { get; private set; }
         public int PurchaseOderNo { get; private set; }
         public DateTimeOffset OrderDate { get; } = DateTimeOffset.Now;
-        public int BuyerId { get; }
+        public int BuyerId { get; private set; }
         public Address AddressToShip { get; }
 
         public IReadOnlyCollection<PurchaseOrderItem> OrderItems => _orderItems.AsReadOnly();
@@ -63,9 +63,9 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Domain
             }
 
             Id = newPurchaseOrderCreatedEvent.PurchaseOrderId;
+            BuyerId = newPurchaseOrderCreatedEvent.BuyerId;
             PurchaseOderNo = newPurchaseOrderCreatedEvent.PurchaseOrderNo;
-
-            _orderItems.AddRange(newPurchaseOrderCreatedEvent.PurchaseOrderItems);
+            _orderItems  = newPurchaseOrderCreatedEvent.PurchaseOrderItems.ToList();
         }
 
         private void OnProductPurchasedEvent(ProductPurchasedEvent productPurchasedEvent)
@@ -74,8 +74,6 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Domain
         private void OnSubscriptionItemPurchasedEvent(SubscriptionItemPurchasedEvent subscriptionItemPurchasedEvent)
         {
         }
-
-
 
         private void RegisterProcessors()
         {

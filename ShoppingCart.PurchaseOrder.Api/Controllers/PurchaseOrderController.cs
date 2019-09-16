@@ -44,11 +44,6 @@ namespace ShoppingCart.Api.Controllers
         {
             var processPurchaseOrderCommand = new ProcessPurchaseOrderCommand(purchaseOrderNo);
             await _commandBus.SendAsync(processPurchaseOrderCommand);
-
-            //var shippingAddress = new Address("126 BowhillWay", "Harlow",
-            //    "Essex", "United Kingdom", "CM20 2FH");
-            //var processOrderCommand = new CreatePurchaseOrderCommand(Guid.Parse(processOrderModel.BasketId), shippingAddress, 123456);
-            //await _commandBus.SendAsync(processOrderCommand);
         }
 
     }

@@ -4,6 +4,7 @@ using Infrastructure.Core;
 using Infrastructure.Core.Command;
 using Infrastructure.Core.Event;
 using Infrastructure.Core.EventStore;
+using Infrastructure.Core.Logger;
 using Infrastructure.Core.Query;
 using Infrastructure.Core.Repository;
 using Infrastructure.Data;
@@ -83,13 +84,13 @@ namespace ShoppingCart.Api
                 container.GetService<ITextSerializer>);
             services.AddTransient(typeof(IAsyncRepository<>), typeof(AsyncRepository<>));
             services.AddScoped(typeof(IAggregateRepositoryService<>), typeof(AggregateRepositoryService<>));
-            
+
             //Command
             services.AddScoped<ICommandHandler<AddItemToBasketCommand>, AddItemToBasketHandler>();
             services.AddScoped<ICommandHandler<CreateBasketForUserCommand>, CreateBasketForUserCommandHandler>();
             services.AddScoped<ICommandHandler<CreatePurchaseOrderCommand>, CreatePurchaseOrderCommandHandler>();
             services.AddScoped<ICommandHandler<ProcessPurchaseOrderCommand>, ProcessPurchaseOrderCommandHandler>();
-            
+
             services.AddScoped<ICommandBus>(container =>
             {
                 var commandBus = new CommandBus();
@@ -125,6 +126,9 @@ namespace ShoppingCart.Api
                 queryBus.SubscribeAsync(container.GetService<IQueryHandler<GetBasketByBuyerId, ApplicationCore.Basket.Query.ViewModel.Basket>>()).Wait();
                 return queryBus;
             });
+
+            //logger
+            services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
 
             var config = new MapperConfiguration(cfg =>
             {
