@@ -6,10 +6,15 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Events
 {
     public class ProductPurchasedEvent : VersionedEvent
     {
-        private readonly IEnumerable<PurchaseOrderItem> _purchaseOrderList;
-        public ProductPurchasedEvent(IEnumerable<PurchaseOrderItem> purchaseOrderItem)
+        public readonly IEnumerable<PurchaseOrderItem> PurchaseOrderList;
+        public int PurchaseOrderNo { get;  }
+        public int BuyerId { get; }
+
+        public ProductPurchasedEvent(int purchasePurchaseOrderNo, int buyerId, IEnumerable<PurchaseOrderItem> purchaseOrderItem)
         {
-            _purchaseOrderList = purchaseOrderItem;
+            PurchaseOrderNo = purchasePurchaseOrderNo;
+            PurchaseOrderList = purchaseOrderItem;
+            BuyerId = buyerId;
         }
     }
 }

@@ -4,12 +4,12 @@ namespace ShoppingCart.ApplicationCore.Basket.Commands
 {
     public class CreateBasketForUserCommand : Command
     {
-        public CreateBasketForUserCommand(string buyerId)
+        public CreateBasketForUserCommand(int buyerId)
         {
             BuyerId = buyerId;
         }
 
-        public string BuyerId { get; private set; }
+        public int BuyerId { get; private set; }
 
     }
 }

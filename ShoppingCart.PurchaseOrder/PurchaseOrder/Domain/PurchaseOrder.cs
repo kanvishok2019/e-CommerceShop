@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Ardalis.GuardClauses;
 using Infrastructure.Core.Domain;
+using Infrastructure.Core.Event;
 using ShoppingCart.ApplicationCore.PurchaseOrder.Commands;
 using ShoppingCart.ApplicationCore.PurchaseOrder.Events;
 
@@ -14,12 +15,12 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Domain
         private readonly IDictionary<CatalogItemType, Action<List<PurchaseOrderItem>>> _processors;
         private readonly List<PurchaseOrderItem> _orderItems;
 
-        public PurchaseOrder(Guid id, int purchaseOderNo, string buyerId, Address addressToShip,
+        public PurchaseOrder(Guid id, int purchaseOderNo, int buyerId, Address addressToShip,
             List<PurchaseOrderItem> items) : base(id)
         {
             Guard.Against.Null(id, nameof(id));
             Guard.Against.Default(id, nameof(id));
-            Guard.Against.NullOrEmpty(buyerId, nameof(buyerId));
+            Guard.Against.Default(buyerId, nameof(buyerId));
             Guard.Against.Null(addressToShip, nameof(addressToShip));
             Guard.Against.Null(items, nameof(items));
 
@@ -29,15 +30,22 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Domain
             AddressToShip = addressToShip;
             _orderItems = items;
             _processors = new Dictionary<CatalogItemType, Action<List<PurchaseOrderItem>>>();
-            AddEvent(new NewPurchaseOrderCreatedEvent(id, purchaseOderNo));
+            AddEvent(new NewPurchaseOrderCreatedEvent(id, purchaseOderNo, _orderItems));
+        }
+
+        public PurchaseOrder(Guid id, IEnumerable<IVersionedEvent> eventsHistory) : base(id)
+        {
+            _orderItems = new List<PurchaseOrderItem>();
+            _processors = new Dictionary<CatalogItemType, Action<List<PurchaseOrderItem>>>();
+            ApplyUpdate(eventsHistory);
         }
 
         public Guid Id { get; private set; }
         public int PurchaseOderNo { get; private set; }
         public DateTimeOffset OrderDate { get; } = DateTimeOffset.Now;
-        public string BuyerId { get;  }
-        public Address AddressToShip { get;  }
-        
+        public int BuyerId { get; }
+        public Address AddressToShip { get; }
+
         public IReadOnlyCollection<PurchaseOrderItem> OrderItems => _orderItems.AsReadOnly();
         public bool IsPurchaseOrderProcessed { get; private set; }
         protected override void RegisterUpdateHandlers()
@@ -54,8 +62,10 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Domain
                 return;
             }
 
-            Id = newPurchaseOrderCreatedEvent.Id;
+            Id = newPurchaseOrderCreatedEvent.PurchaseOrderId;
             PurchaseOderNo = newPurchaseOrderCreatedEvent.PurchaseOrderNo;
+
+            _orderItems.AddRange(newPurchaseOrderCreatedEvent.PurchaseOrderItems);
         }
 
         private void OnProductPurchasedEvent(ProductPurchasedEvent productPurchasedEvent)
@@ -65,16 +75,17 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Domain
         {
         }
 
-        
+
 
         private void RegisterProcessors()
         {
             _processors.Add(CatalogItemType.Subscription, SubscriptionProcessors);
-            _processors.Add(CatalogItemType.Subscription, ProductProcessors);
+            _processors.Add(CatalogItemType.Product, ProductProcessors);
         }
 
         public async Task ProcessPurchaseOrder()
         {
+            RegisterProcessors();
             await Task.Run(() =>
             {
                 var catalogItemTypeList = Enum.GetValues(typeof(CatalogItemType));
@@ -83,7 +94,8 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Domain
                     var catalogTypeEnum = (CatalogItemType)catalogItemType;
                     var processorAsync = GetProcessors(catalogTypeEnum);
                     var itemsToProcess = OrderItems.Where(x => x.ItemOrdered.CatalogItemType == catalogTypeEnum).ToList();
-                    processorAsync(itemsToProcess);
+                    if (itemsToProcess.Count > 0)
+                        processorAsync(itemsToProcess);
                 }
 
                 IsPurchaseOrderProcessed = true;
@@ -100,12 +112,12 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Domain
 
         private void SubscriptionProcessors(IEnumerable<PurchaseOrderItem> purchaseOrderItem)
         {
-            AddEvent(new SubscriptionItemPurchasedEvent(purchaseOrderItem));
+            AddEvent(new SubscriptionItemPurchasedEvent(PurchaseOderNo, BuyerId, purchaseOrderItem));
         }
 
         private void ProductProcessors(IEnumerable<PurchaseOrderItem> purchaseOrderItem)
         {
-            AddEvent(new ProductPurchasedEvent(purchaseOrderItem));
+            AddEvent(new ProductPurchasedEvent(PurchaseOderNo, BuyerId, purchaseOrderItem));
         }
 
     }

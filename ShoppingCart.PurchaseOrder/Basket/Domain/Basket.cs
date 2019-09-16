@@ -10,11 +10,11 @@ namespace ShoppingCart.ApplicationCore.Basket.Domain
 {
     public sealed class Basket : AggregateRoot
     {
-        public Basket(Guid id, string buyerId) : base(id)
+        public Basket(Guid id, int buyerId) : base(id)
         {
             Guard.Against.Null(id, nameof(id));
             Guard.Against.Default(id, nameof(id));
-            Guard.Against.NullOrEmpty(buyerId, nameof(buyerId));
+            Guard.Against.Default(buyerId, nameof(buyerId));
             AddEvent(new BasketCreatedEvent(id, buyerId));
 
         }
@@ -23,7 +23,7 @@ namespace ShoppingCart.ApplicationCore.Basket.Domain
             ApplyUpdate(eventsHistory);
         }
         public Guid Id { get; private set; }
-        public string BuyerId { get; private set; }
+        public int BuyerId { get; private set; }
         private readonly List<BasketItem> _items = new List<BasketItem>();
         public IReadOnlyCollection<BasketItem> Items => _items.AsReadOnly();
 

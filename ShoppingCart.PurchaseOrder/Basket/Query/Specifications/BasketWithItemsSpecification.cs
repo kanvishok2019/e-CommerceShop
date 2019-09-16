@@ -12,7 +12,7 @@ namespace ShoppingCart.ApplicationCore.Basket.Query.Specifications
         {
             AddInclude(b => b.BasketItems);
         }
-        public BasketWithItemsSpecification(string buyerId)
+        public BasketWithItemsSpecification(int buyerId)
             : base(b => b.BuyerId == buyerId)
         {
             AddInclude(b => b.BasketItems);

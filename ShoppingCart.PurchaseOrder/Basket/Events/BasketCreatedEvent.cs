@@ -5,13 +5,13 @@ namespace ShoppingCart.ApplicationCore.Basket.Events
 {
     public class BasketCreatedEvent : VersionedEvent
     {
-        public BasketCreatedEvent(Guid basketId, string buyerId)
+        public BasketCreatedEvent(Guid basketId, int buyerId)
         {
             BasketId = basketId;
             BuyerId = buyerId;
         }
         public Guid BasketId { get; }
-        public string BuyerId { get; }
+        public int BuyerId { get; }
 
     }
 }

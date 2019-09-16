@@ -7,6 +7,7 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Domain
 {
     public class PurchaseOrderItem : BaseEntity
     {
+        
         public CatalogItemOrdered ItemOrdered { get; private set; }
      
         public decimal UnitPrice { get; private set; }
@@ -18,5 +19,8 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Domain
             UnitPrice = unitPrice;
             Units = units;
         }
+
+        //Note: For entity framework
+        public PurchaseOrderItem() { }
     }
 }

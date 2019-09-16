@@ -4,5 +4,6 @@ namespace ShoppingCart.ApplicationCore.Buyer
 {
     public class Buyer : BaseEntity
     {
-        private SubscriptionPlan subscriptionPlan { get; set; }
+        public SubscriptionPlan? SubscriptionPlan { get; set; }
     }
+}

@@ -8,6 +8,6 @@ namespace ShoppingCart.ApplicationCore.Basket.Query
 {
     public class GetBasketByBuyerId:IQuery<ViewModel.Basket>
     {
-        public string BuyerId { get; set; }
+        public int BuyerId { get; set; }
     }
 }

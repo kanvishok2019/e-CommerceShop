@@ -8,14 +8,21 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Query.ViewModel
 {
     public class ShippingInvoice : BaseEntity
     {
-        public ShippingInvoice(int purchaseOrderNo, IReadOnlyCollection<PurchaseOrderItem> purchasedItems)
+        public ShippingInvoice(int purchaseOrderNo, int buyerId, IEnumerable<PurchaseOrderItem> purchasedItems)
         {
             PurchaseOrderNo = purchaseOrderNo;
             PurchasedItems = purchasedItems;
+            BuyerId = buyerId;
         }
 
-        public int PurchaseOrderNo { get; set; }
-        public IReadOnlyCollection<PurchaseOrderItem> PurchasedItems { get; }
+        //Note: For Entity framework
+        public ShippingInvoice()
+        {
+
+        }
+        public int PurchaseOrderNo { get; }
+        public int BuyerId { get; }
+        public IEnumerable<PurchaseOrderItem> PurchasedItems { get; }
 
     }
 }

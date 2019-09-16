@@ -6,12 +6,16 @@ using ShoppingCart.ApplicationCore.PurchaseOrder.Domain;
 
 namespace ShoppingCart.ApplicationCore.PurchaseOrder.Events
 {
-    public class SubscriptionItemPurchasedEvent: VersionedEvent
+    public class SubscriptionItemPurchasedEvent : VersionedEvent
     {
-        private readonly IEnumerable<PurchaseOrderItem> _purchaseOrderList;
-        public SubscriptionItemPurchasedEvent(IEnumerable<PurchaseOrderItem> purchaseOrderItem)
+        public readonly IEnumerable<PurchaseOrderItem> PurchaseOrderList;
+        public int PurchaseOrderNo { get; }
+        public int BuyerId { get; }
+        public SubscriptionItemPurchasedEvent(int purchasePurchaseOrderNo, int buyerId, IEnumerable<PurchaseOrderItem> purchaseOrderItem)
         {
-            _purchaseOrderList = purchaseOrderItem;
+            PurchaseOrderNo = purchasePurchaseOrderNo;
+            BuyerId = buyerId;
+            PurchaseOrderList = purchaseOrderItem;
         }
     }
 }

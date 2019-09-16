@@ -96,6 +96,7 @@ namespace ShoppingCart.Api
                 commandBus.SubscribeAsync(container.GetService<ICommandHandler<CreateBasketForUserCommand>>()).Wait();
                 commandBus.SubscribeAsync(container.GetService<ICommandHandler<AddItemToBasketCommand>>()).Wait();
                 commandBus.SubscribeAsync(container.GetService<ICommandHandler<CreatePurchaseOrderCommand>>()).Wait();
+                commandBus.SubscribeAsync(container.GetService<ICommandHandler<ProcessPurchaseOrderCommand>>()).Wait();
                 return commandBus;
             });
 
@@ -109,6 +110,8 @@ namespace ShoppingCart.Api
                 var eventBus = new EventBus();
                 eventBus.SubscribeAsync(container.GetService<IEventHandler<BasketCreatedEvent>>()).Wait();
                 eventBus.SubscribeAsync(container.GetService<IEventHandler<ItemAddedToBasketEvent>>()).Wait();
+                eventBus.SubscribeAsync(container.GetService<IEventHandler<ProductPurchasedEvent>>()).Wait();
+                eventBus.SubscribeAsync(container.GetService<IEventHandler<SubscriptionItemPurchasedEvent>>()).Wait();
                 return eventBus;
             });
 

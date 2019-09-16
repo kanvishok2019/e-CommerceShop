@@ -12,12 +12,12 @@ namespace FunctionalTest
 {
     public class BasketTests : IClassFixture<ShopWebApplicationFactory<Startup>>
     {
-        private readonly CreateBasketModel _basketModel;
         public HttpClient Client { get; }
 
         public BasketTests(ShopWebApplicationFactory<Startup> factory)
         {
-            _basketModel = new CreateBasketModel { BuyerId = Guid.NewGuid().ToString() };
+         
+          
             Client = factory.CreateClient(new WebApplicationFactoryClientOptions
             {
                 AllowAutoRedirect = false
@@ -28,7 +28,7 @@ namespace FunctionalTest
         [Fact]
         public async Task Create_New_Basket_Should_Create_New_Basket_For_User()
         {
-
+            var _basketModel = new CreateBasketModel { BuyerId = 1 };
             var response = await Client.PostAsJsonAsync("/api/basket/", _basketModel);
             response.EnsureSuccessStatusCode();
             var createdBasketResponse = await Client.GetAsync("api/basket/" + _basketModel.BuyerId);
@@ -40,6 +40,7 @@ namespace FunctionalTest
         [Fact]
         public async Task Add_Item_ToBasket_Should_Crete_Basket_And_Add()
         {
+            var _basketModel = new CreateBasketModel { BuyerId = 2 };
             var response = await Client.PostAsJsonAsync("/api/basket/", _basketModel);
             response.EnsureSuccessStatusCode();
             var createdBasketResponse = await Client.GetAsync("api/basket/" + _basketModel.BuyerId);
@@ -73,7 +74,7 @@ namespace FunctionalTest
 
     public class CreateBasketModel
     {
-        public string BuyerId { get; set; }
+        public int BuyerId { get; set; }
     }
 
 }

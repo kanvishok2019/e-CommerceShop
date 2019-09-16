@@ -29,7 +29,7 @@ namespace ShoppingCart.PurchaseOrder.Api.Controllers
         } 
 
         [HttpGet("{buyerId}")]
-        public async Task<Basket> Get(string buyerId)
+        public async Task<Basket> Get(int buyerId)
         {
            var basket = await _queryBus.SendAsync<GetBasketByBuyerId, Basket>(new GetBasketByBuyerId {BuyerId = buyerId});
             return basket;
@@ -45,6 +45,8 @@ namespace ShoppingCart.PurchaseOrder.Api.Controllers
         [HttpPut("{basketId}")]
         public async Task Put([FromBody] BasketItemModel basketItemModel)
         {
+            //Assumption: We will call the Product Api to get the product
+            //pricing and other details, So that user cannot tamper the price
             var addItemToBasketCommand = _autoMapper.Map<BasketItemModel, AddItemToBasketCommand>(basketItemModel);
 
             await _commandBus.SendAsync(addItemToBasketCommand);

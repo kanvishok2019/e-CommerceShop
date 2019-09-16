@@ -17,7 +17,7 @@ namespace FunctionalTest
         public HttpClient Client { get; }
         public PurchaseOrderTests(ShopWebApplicationFactory<Startup> factory)
         {
-            _basketModel = new CreateBasketModel { BuyerId = Guid.NewGuid().ToString() };
+            _basketModel = new CreateBasketModel { BuyerId = 12345 };
             
             Client = factory.CreateClient(new WebApplicationFactoryClientOptions
             {
@@ -61,6 +61,8 @@ namespace FunctionalTest
         
             var processOrderResponse = await Client.PostAsJsonAsync("/api/purchase-orders/1/process",new{});
             processOrderResponse.EnsureSuccessStatusCode();
+
+            
         }
     }
 
