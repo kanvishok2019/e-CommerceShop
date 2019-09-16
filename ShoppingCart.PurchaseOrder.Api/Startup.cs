@@ -23,7 +23,10 @@ using ShoppingCart.ApplicationCore.Basket.Handlers.QueryHandlers;
 using ShoppingCart.ApplicationCore.Basket.Handlers.ViewModelGenerators;
 using ShoppingCart.ApplicationCore.Basket.Query;
 using ShoppingCart.ApplicationCore.PurchaseOrder.Commands;
+using ShoppingCart.ApplicationCore.PurchaseOrder.Events;
 using ShoppingCart.ApplicationCore.PurchaseOrder.Handlers.CommandHandlers;
+using ShoppingCart.ApplicationCore.PurchaseOrder.Handlers.EventHandlers;
+using ShoppingCart.ApplicationCore.PurchaseOrder.Handlers.ViewModelGenerators;
 
 namespace ShoppingCart.Api
 {
@@ -85,6 +88,8 @@ namespace ShoppingCart.Api
             services.AddScoped<ICommandHandler<AddItemToBasketCommand>, AddItemToBasketHandler>();
             services.AddScoped<ICommandHandler<CreateBasketForUserCommand>, CreateBasketForUserCommandHandler>();
             services.AddScoped<ICommandHandler<CreatePurchaseOrderCommand>, CreatePurchaseOrderCommandHandler>();
+            services.AddScoped<ICommandHandler<ProcessPurchaseOrderCommand>, ProcessPurchaseOrderCommandHandler>();
+            
             services.AddScoped<ICommandBus>(container =>
             {
                 var commandBus = new CommandBus();
@@ -97,6 +102,8 @@ namespace ShoppingCart.Api
             //Event
             services.AddScoped<IEventHandler<BasketCreatedEvent>, BasketViewModelGenerator>();
             services.AddScoped<IEventHandler<ItemAddedToBasketEvent>, BasketItemAddedViewModelGenerator>();
+            services.AddScoped<IEventHandler<ProductPurchasedEvent>, ShippingInvoiceViewModelGenerator>();
+            services.AddScoped<IEventHandler<SubscriptionItemPurchasedEvent>, SubscriptionItemPurchasedEventHandler>();
             services.AddScoped<IEventBus>(container =>
             {
                 var eventBus = new EventBus();

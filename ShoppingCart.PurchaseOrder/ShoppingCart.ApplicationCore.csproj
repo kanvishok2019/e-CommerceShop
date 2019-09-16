@@ -10,8 +10,6 @@
 
   <ItemGroup>
     <Folder Include="Basket\Handlers\EventHandlers\" />
-    <Folder Include="PurchaseOrder\Handlers\EventHandlers\" />
-    <Folder Include="PurchaseOrder\Handlers\ViewModelGenerators\" />
   </ItemGroup>
 
   <ItemGroup>

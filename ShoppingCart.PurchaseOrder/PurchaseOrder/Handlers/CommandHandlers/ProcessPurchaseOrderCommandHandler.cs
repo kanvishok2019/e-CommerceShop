@@ -9,7 +9,7 @@ using ShoppingCart.ApplicationCore.PurchaseOrder.Domain;
 
 namespace ShoppingCart.ApplicationCore.PurchaseOrder.Handlers.CommandHandlers
 {
-    class ProcessPurchaseOrderCommandHandler:ICommandHandler<ProcessPurchaseOrderCommand>
+    public class ProcessPurchaseOrderCommandHandler:ICommandHandler<ProcessPurchaseOrderCommand>
     {
         private readonly IAggregateRepositoryService<Domain.PurchaseOrder> _shopAggregateRepositoryService;
         private readonly IAsyncRepository<PurchaseOrderIdNumberMapping> _purchaseOrderIdNumberMappingAsyncRepository;

@@ -5,8 +5,10 @@ using System.Text;
 using Infrastructure.Core.EventStore;
 using Microsoft.EntityFrameworkCore;
 using ShoppingCart.ApplicationCore.Basket.Query.ViewModel;
+using ShoppingCart.ApplicationCore.Buyer;
 using ShoppingCart.ApplicationCore.Catalog;
 using ShoppingCart.ApplicationCore.PurchaseOrder.Domain;
+using ShoppingCart.ApplicationCore.PurchaseOrder.Query.ViewModel;
 
 namespace Infrastructure.Data
 {
@@ -29,6 +31,11 @@ namespace Infrastructure.Data
         public DbSet<Basket> Baskets { get; set; }
         public DbSet<BasketItem> BasketItems { get; set; }
         public DbSet<PurchaseOrderIdNumberMapping> PurchaseOrderIdNumberMappings { get; set; }
-        
+
+        public DbSet<Buyer> Buyers { get; set; }
+        public DbSet<ShippingInvoice> ShippingInvoices { get; set; }
+
+
+
     }
 }

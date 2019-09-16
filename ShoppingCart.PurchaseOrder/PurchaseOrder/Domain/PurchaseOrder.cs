@@ -11,28 +11,40 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Domain
 {
     public sealed class PurchaseOrder : AggregateRoot
     {
-        public PurchaseOrder(Guid id, int purchaseOderNo, string buyerId, Address shipToAddress,
+        private readonly IDictionary<CatalogItemType, Action<List<PurchaseOrderItem>>> _processors;
+        private readonly List<PurchaseOrderItem> _orderItems;
+
+        public PurchaseOrder(Guid id, int purchaseOderNo, string buyerId, Address addressToShip,
             List<PurchaseOrderItem> items) : base(id)
         {
             Guard.Against.Null(id, nameof(id));
             Guard.Against.Default(id, nameof(id));
             Guard.Against.NullOrEmpty(buyerId, nameof(buyerId));
-            Guard.Against.Null(shipToAddress, nameof(shipToAddress));
+            Guard.Against.Null(addressToShip, nameof(addressToShip));
             Guard.Against.Null(items, nameof(items));
 
+            Id = id;
+            PurchaseOderNo = purchaseOderNo;
+            BuyerId = buyerId;
+            AddressToShip = addressToShip;
+            _orderItems = items;
+            _processors = new Dictionary<CatalogItemType, Action<List<PurchaseOrderItem>>>();
             AddEvent(new NewPurchaseOrderCreatedEvent(id, purchaseOderNo));
         }
 
         public Guid Id { get; private set; }
         public int PurchaseOderNo { get; private set; }
-        public DateTimeOffset OrderDate { get; private set; } = DateTimeOffset.Now;
-        public string BuyerId { get; private set; }
-        public Address ShipToAddress { get; private set; }
-        private readonly List<PurchaseOrderItem> _orderItems = new List<PurchaseOrderItem>();
+        public DateTimeOffset OrderDate { get; } = DateTimeOffset.Now;
+        public string BuyerId { get;  }
+        public Address AddressToShip { get;  }
+        
         public IReadOnlyCollection<PurchaseOrderItem> OrderItems => _orderItems.AsReadOnly();
+        public bool IsPurchaseOrderProcessed { get; private set; }
         protected override void RegisterUpdateHandlers()
         {
             RegisterUpdateHandler<NewPurchaseOrderCreatedEvent>(OnNewPurchaseOrderCreated);
+            RegisterUpdateHandler<ProductPurchasedEvent>(OnProductPurchasedEvent);
+            RegisterUpdateHandler<SubscriptionItemPurchasedEvent>(OnSubscriptionItemPurchasedEvent);
         }
 
         private void OnNewPurchaseOrderCreated(NewPurchaseOrderCreatedEvent newPurchaseOrderCreatedEvent)
@@ -46,7 +58,14 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Domain
             PurchaseOderNo = newPurchaseOrderCreatedEvent.PurchaseOrderNo;
         }
 
-        private IDictionary<CatalogItemType, Action<List<PurchaseOrderItem>>> _processors = new Dictionary<CatalogItemType, Action<List<PurchaseOrderItem>>>();
+        private void OnProductPurchasedEvent(ProductPurchasedEvent productPurchasedEvent)
+        {
+        }
+        private void OnSubscriptionItemPurchasedEvent(SubscriptionItemPurchasedEvent subscriptionItemPurchasedEvent)
+        {
+        }
+
+        
 
         private void RegisterProcessors()
         {
@@ -66,8 +85,10 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Domain
                     var itemsToProcess = OrderItems.Where(x => x.ItemOrdered.CatalogItemType == catalogTypeEnum).ToList();
                     processorAsync(itemsToProcess);
                 }
+
+                IsPurchaseOrderProcessed = true;
             });
-            
+
         }
 
         private Action<List<PurchaseOrderItem>> GetProcessors(CatalogItemType catalogItemType)
