@@ -32,6 +32,7 @@ namespace ShoppingCart.ApplicationCore.Basket.Handlers.ViewModelGenerators
                 BuyerId = @event.BuyerId
             });
             await _unitOfWork.SaveChangesAsync();
+
         }
 
 

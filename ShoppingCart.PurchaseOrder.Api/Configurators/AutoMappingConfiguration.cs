@@ -18,6 +18,7 @@ namespace ShoppingCart.Api.Configurators
             CreateMap<BasketItemModel, AddItemToBasketCommand>();
             CreateMap<CreateBasketModel, CreateBasketForUserCommand>();
             CreateMap<ShoppingCart.ApplicationCore.Basket.Domain.Basket, Basket>();
-        }
+
+         }
     }
 }

@@ -25,7 +25,7 @@ namespace ShoppingCart.ApplicationCoreTests.PurchaseOrder
                         "ProductName", "PictureUri"), 5.0M, 5)
             };
 
-            var purchaseOrder = new ApplicationCore.PurchaseOrder.Domain.PurchaseOrder(Guid.NewGuid(), "buyerId", address, purchasedItem);
+            var purchaseOrder = new ApplicationCore.PurchaseOrder.Domain.PurchaseOrder(Guid.NewGuid(),123,Guid.NewGuid().ToString(), address, purchasedItem);
             var eventObj = purchaseOrder.UnCommittedEvents.FirstOrDefault();
             Assert.Equal("NewPurchaseOrderCreatedEvent", eventObj.GetType().Name);
             Assert.Single(purchaseOrder.UnCommittedEvents);

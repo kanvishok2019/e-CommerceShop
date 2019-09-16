@@ -4,11 +4,11 @@ using ShoppingCart.ApplicationCore.PurchaseOrder.Domain;
 
 namespace ShoppingCart.ApplicationCore.PurchaseOrder.Commands
 {
-    public class ProcessOrderCommand : Command
+    public class CreatePurchaseOrderCommand : Command
     {
-        public Guid BasketId { get; private set; }
-        public Address Address { get; private set; }
-        ProcessOrderCommand(Guid basketId, Address address)
+        public Guid BasketId { get; }
+        public Address Address { get; }
+        public CreatePurchaseOrderCommand(Guid basketId, Address address)
         {
             BasketId = basketId;
             Address = address;

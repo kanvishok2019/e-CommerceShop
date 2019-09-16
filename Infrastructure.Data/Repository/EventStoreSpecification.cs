@@ -13,9 +13,7 @@ namespace Infrastructure.Data.Repository
         public EventStoreSpecification(string aggregateId, string type) :
             base(b => b.AggregateId == aggregateId && b.AggregateType == type)
         {
-            //ApplySelect(selectorFunc);
-            ApplyOrderBy(x => x.Version);
-
+             ApplyOrderBy(x => x.Version);
         }
     }
 }

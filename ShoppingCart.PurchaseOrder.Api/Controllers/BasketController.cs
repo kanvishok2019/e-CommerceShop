@@ -19,7 +19,6 @@ namespace ShoppingCart.PurchaseOrder.Api.Controllers
     {
         private readonly ICommandBus _commandBus;
         private readonly IQueryBus _queryBus;
-
         private readonly IMapper _autoMapper;
 
         public BasketController(ICommandBus commandBus, IMapper autoMapper, IQueryBus queryBus)
@@ -27,23 +26,8 @@ namespace ShoppingCart.PurchaseOrder.Api.Controllers
             _commandBus = commandBus;
             _autoMapper = autoMapper;
             _queryBus = queryBus;
-        }
+        } 
 
-        // GET api/values
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        //// GET api/values/5
-        //[HttpGet("{id}")]
-        //public ActionResult<string> Get(int id)
-        //{
-        //    return "value";
-        //}
-
-        //[HttpGet("get-basket-id/{username}", Name = "get-basket-id")]
         [HttpGet("{buyerId}")]
         public async Task<Basket> Get(string buyerId)
         {
@@ -51,16 +35,13 @@ namespace ShoppingCart.PurchaseOrder.Api.Controllers
             return basket;
         }
 
-        // POST api/values
-        [HttpPost]
+         [HttpPost]
         public async Task Post([FromBody] CreateBasketModel createBasketModel)
         {
             var createNewBasketCommand = _autoMapper.Map<CreateBasketModel, CreateBasketForUserCommand>(createBasketModel);
             await _commandBus.SendAsync(createNewBasketCommand);
         }
-
-        // PUT api/values/5
-        //[HttpPut("add-item-to-basket/{id}", Name = "add-item-to-basket")]
+    
         [HttpPut("{basketId}")]
         public async Task Put([FromBody] BasketItemModel basketItemModel)
         {
@@ -68,11 +49,6 @@ namespace ShoppingCart.PurchaseOrder.Api.Controllers
 
             await _commandBus.SendAsync(addItemToBasketCommand);
         }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+       
     }
 }

@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <Folder Include="Basket\Handlers\EventHandlers\" />
-    <Folder Include="PurchaseOrder\Events\" />
     <Folder Include="PurchaseOrder\Handlers\EventHandlers\" />
     <Folder Include="PurchaseOrder\Handlers\ViewModelGenerators\" />
   </ItemGroup>
@@ -18,6 +17,7 @@
   <ItemGroup>
     <PackageReference Include="Ardalis.GuardClauses" Version="1.2.9" />
     <PackageReference Include="AutoMapper" Version="7.0.1" />
+    <PackageReference Include="NRules" Version="0.9.0" />
   </ItemGroup>
 
 </Project>

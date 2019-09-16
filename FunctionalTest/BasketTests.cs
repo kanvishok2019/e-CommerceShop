@@ -13,6 +13,7 @@ namespace FunctionalTest
     public class BasketTests : IClassFixture<ShopWebApplicationFactory<Startup>>
     {
         private readonly CreateBasketModel _basketModel;
+        public HttpClient Client { get; }
 
         public BasketTests(ShopWebApplicationFactory<Startup> factory)
         {
@@ -22,6 +23,7 @@ namespace FunctionalTest
                 AllowAutoRedirect = false
             });
         }
+
 
         [Fact]
         public async Task Create_New_Basket_Should_Create_New_Basket_For_User()
@@ -55,9 +57,10 @@ namespace FunctionalTest
             var afterItemAddedResponse = await Client.GetAsync("api/basket/" + _basketModel.BuyerId);
             afterItemAddedResponse.EnsureSuccessStatusCode();
             basket = await afterItemAddedResponse.Content.ReadAsAsync<Basket>();
+            Assert.Single(basket.BasketItems);
         }
 
-        public HttpClient Client { get; }
+
     }
 
     public class BasketITemPostModel

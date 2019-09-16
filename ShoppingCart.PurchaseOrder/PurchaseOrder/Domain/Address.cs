@@ -8,21 +8,21 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Domain
 
         public String City { get; private set; }
 
-        public String State { get; private set; }
+        public String County { get; private set; }
 
         public String Country { get; private set; }
 
-        public String ZipCode { get; private set; }
+        public String Postcode { get; private set; }
 
         private Address() { }
 
-        public Address(string street, string city, string state, string country, string zipcode)
+        public Address(string street, string city, string county, string country, string postcode)
         {
             Street = street;
             City = city;
-            State = state;
+            County = county;
             Country = country;
-            ZipCode = zipcode;
+            Postcode = postcode;
         }
     }
 }

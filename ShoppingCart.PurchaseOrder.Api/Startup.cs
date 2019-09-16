@@ -22,6 +22,8 @@ using ShoppingCart.ApplicationCore.Basket.Handlers.CommandHandlers;
 using ShoppingCart.ApplicationCore.Basket.Handlers.QueryHandlers;
 using ShoppingCart.ApplicationCore.Basket.Handlers.ViewModelGenerators;
 using ShoppingCart.ApplicationCore.Basket.Query;
+using ShoppingCart.ApplicationCore.PurchaseOrder.Commands;
+using ShoppingCart.ApplicationCore.PurchaseOrder.Handlers.CommandHandlers;
 
 namespace ShoppingCart.Api
 {
@@ -82,11 +84,13 @@ namespace ShoppingCart.Api
             //Command
             services.AddScoped<ICommandHandler<AddItemToBasketCommand>, AddItemToBasketHandler>();
             services.AddScoped<ICommandHandler<CreateBasketForUserCommand>, CreateBasketForUserCommandHandler>();
+            services.AddScoped<ICommandHandler<CreatePurchaseOrderCommand>, CreatePurchaseOrderCommandHandler>();
             services.AddScoped<ICommandBus>(container =>
             {
                 var commandBus = new CommandBus();
                 commandBus.SubscribeAsync(container.GetService<ICommandHandler<CreateBasketForUserCommand>>()).Wait();
                 commandBus.SubscribeAsync(container.GetService<ICommandHandler<AddItemToBasketCommand>>()).Wait();
+                commandBus.SubscribeAsync(container.GetService<ICommandHandler<CreatePurchaseOrderCommand>>()).Wait();
                 return commandBus;
             });
 

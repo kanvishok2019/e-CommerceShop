@@ -35,7 +35,8 @@ namespace ShoppingCart.ApplicationCore.Basket.Domain
                 {
                     CatalogItemId = catalogItemId,
                     Quantity = quantity,
-                    UnitPrice = unitPrice
+                    UnitPrice = unitPrice,
+                    BasketId = Id
                 };
                 _items.Add(item);
                 AddEvent(new ItemAddedToBasketEvent(Id, item));
