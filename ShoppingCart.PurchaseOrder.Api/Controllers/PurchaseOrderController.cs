@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using ShoppingCart.Api.Models;
 using ShoppingCart.ApplicationCore.PurchaseOrder.Commands;
 using ShoppingCart.ApplicationCore.PurchaseOrder.Domain;
+using ShoppingCart.ApplicationCore.PurchaseOrder.Query;
+using ShoppingCart.ApplicationCore.PurchaseOrder.Query.ViewModel;
 
 namespace ShoppingCart.Api.Controllers
 {
@@ -40,10 +42,13 @@ namespace ShoppingCart.Api.Controllers
         }
 
         [HttpPost("{purchaseOrderNo}/process")]
-        public async Task Post(int purchaseOrderNo)
+        public async Task<ShippingInvoice> Post(int purchaseOrderNo)
         {
             var processPurchaseOrderCommand = new ProcessPurchaseOrderCommand(purchaseOrderNo);
             await _commandBus.SendAsync(processPurchaseOrderCommand);
+
+            var shippingInvoiceQuery = new ShippingInvoiceQuery(purchaseOrderNo);
+           return  await _queryBus.SendAsync<ShippingInvoiceQuery, ShippingInvoice>(shippingInvoiceQuery);
         }
 
     }

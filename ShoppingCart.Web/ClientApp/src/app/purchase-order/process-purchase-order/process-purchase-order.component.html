@@ -8,6 +8,12 @@
 <mat-card class="purchase-order-card">
   <div fxLayout="row wrap" class="test-data-builder">
     <div fxFlex="150px"><button mat-raised-button color="primary" (click)="buildTestData()">Build Test Data</button></div>
-    <div fxFlex="auto" class="progress"><mat-progress-bar mode="indeterminate"></mat-progress-bar></div>
+    <div fxFlex="auto" class="progress"><mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar></div>
   </div>
+  <h2>Buyers</h2>
+  <app-buyers [buyers]="buyers"></app-buyers>
+
+  <app-shipping-invoice [shippingInvoice]="shippingInvoice" *ngIf="shippingInvoice"></app-shipping-invoice>
+  <button (click)="processPurchaseOrder(1)">Process PurchaseOrder 1</button>
+  <button (click)="processPurchaseOrder(2)">Process PurchaseOrder 2</button>
 </mat-card>

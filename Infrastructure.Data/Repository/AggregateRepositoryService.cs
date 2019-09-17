@@ -34,7 +34,7 @@ namespace Infrastructure.Data.Repository
               {
                   var eventStoreSpecification = new EventStoreSpecification(aggregateRootKey.ToString(), typeof(T).Name);
                   var eventHistoryList = new List<IVersionedEvent>();
-                  foreach (var eventHistory in _eventStoreRepositoryService.ListAllAsync().Result)
+                  foreach (var eventHistory in _eventStoreRepositoryService.ListAsync(eventStoreSpecification).Result)
                   {
                       eventHistoryList.Add(Deserialize(eventHistory));
                   }

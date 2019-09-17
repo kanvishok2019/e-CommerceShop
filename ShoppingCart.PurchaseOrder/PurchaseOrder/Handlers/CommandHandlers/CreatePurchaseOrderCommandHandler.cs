@@ -51,10 +51,11 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Handlers.CommandHandlers
             }
 
             var purchaseOrderId = Guid.NewGuid();
-            await _purchaseOrderIdNumberMappingAsyncRepository.AddAsync(new PurchaseOrderIdNumberMapping{PurchaseOrderId = purchaseOrderId });
-            var purchaseOrderNo = await _unitOfWork.SaveChangesAsync();
+            var purchaseOrderIdNumberMapping = new PurchaseOrderIdNumberMapping{PurchaseOrderId = purchaseOrderId};
+            await _purchaseOrderIdNumberMappingAsyncRepository.AddAsync(purchaseOrderIdNumberMapping);
+            await _unitOfWork.SaveChangesAsync();
 
-            var purchaseOrder = new Domain.PurchaseOrder(purchaseOrderId, purchaseOrderNo,  basket.BuyerId, command.Address, items);
+            var purchaseOrder = new Domain.PurchaseOrder(purchaseOrderId, purchaseOrderIdNumberMapping.Id,  basket.BuyerId, command.Address, items);
             await _shopAggregateRepositoryService.SaveAsync(purchaseOrder);
         }
     }

@@ -1,0 +1,1 @@
+{"version":3,"file":"basket-item-post-model.js","sourceRoot":"","sources":["basket-item-post-model.ts"],"names":[],"mappings":";;AAAA;IAKE,6BAAY,QAAgB,EAAE,aAAqB,EAAE,QAAgB,EAAE,KAAa;QAClF,IAAI,CAAC,QAAQ,GAAG,QAAQ,CAAC;QACzB,IAAI,CAAC,aAAa,GAAG,aAAa,CAAC;QACnC,IAAI,CAAC,QAAQ,GAAG,QAAQ,CAAC;QACzB,IAAI,CAAC,KAAK,GAAG,KAAK,CAAC;IACrB,CAAC;IACH,0BAAC;AAAD,CAAC,AAXD,IAWC;AAXY,kDAAmB"}

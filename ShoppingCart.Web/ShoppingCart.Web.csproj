@@ -25,11 +25,23 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\purchase-order\models\basket-item-post.ts" />
+    <None Remove="ClientApp\src\app\purchase-order\models\basket.ts" />
+    <None Remove="ClientApp\src\app\purchase-order\models\buyer.ts" />
+    <None Remove="ClientApp\src\app\purchase-order\models\catalog-item-ordered.ts" />
+    <None Remove="ClientApp\src\app\purchase-order\models\purchased-item.ts" />
+    <None Remove="ClientApp\src\app\purchase-order\purchase-order.service.ts" />
     <None Remove="ClientApp\src\app\purchase-order\test-data-service.ts" />
     <None Remove="ClientApp\src\services\api.service.ts" />
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\purchase-order\models\basket-item-post.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\purchase-order\models\basket.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\purchase-order\models\buyer.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\purchase-order\models\catalog-item-ordered.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\purchase-order\models\purchased-item.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\purchase-order\purchase-order.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\purchase-order\test-data-service.ts" />
     <TypeScriptCompile Include="ClientApp\src\services\api.service.ts" />
   </ItemGroup>

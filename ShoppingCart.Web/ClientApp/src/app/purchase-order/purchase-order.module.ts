@@ -9,9 +9,12 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { PurchaseOrderRoutingModule } from './purchase-order-routing.module';
 import { ProcessPurchaseOrderComponent } from './process-purchase-order/process-purchase-order.component';
+import { BuyersComponent } from './process-purchase-order/buyers/buyers.component';
+import { BuyerComponent } from './process-purchase-order/buyers/buyer/buyer.component';
+import { ShippingInvoiceComponent } from './shipping-invoice/shipping-invoice.component';
 
 @NgModule({
-  declarations: [ProcessPurchaseOrderComponent],
+  declarations: [ProcessPurchaseOrderComponent, BuyersComponent, BuyerComponent, ShippingInvoiceComponent],
   imports: [
     CommonModule,
     MatToolbarModule,

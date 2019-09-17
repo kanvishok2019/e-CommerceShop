@@ -9,15 +9,6 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Domain
 {
     public class PurchaseOrderIdNumberMapping : BaseEntity
     {
-        
-        
-        //private int _purchaseOrderNo;
         public Guid PurchaseOrderId { get; set; }
-
-        //public int PurchaseOrderNo => Id;
-        //{
-        //    get { return _purchaseOrderNo; }
-        //    set => _purchaseOrderNo = Id;
-        //}
     }
 }

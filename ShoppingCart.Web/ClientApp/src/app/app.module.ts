@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ApiService } from '../services/api.service';
 import { TestDataService } from './purchase-order/test-data-service';
+import { PurchaseOrderService } from './purchase-order/purchase-order.service';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { TestDataService } from './purchase-order/test-data-service';
   ],
   providers: [
     ApiService,
-    TestDataService
+    TestDataService,
+    PurchaseOrderService
   ],
   bootstrap: [AppComponent]
 })

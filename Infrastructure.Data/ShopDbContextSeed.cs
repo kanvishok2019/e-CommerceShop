@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using System.Linq;
+using System.Threading.Tasks;
 using ShoppingCart.ApplicationCore.Buyer;
 using ShoppingCart.ApplicationCore.Catalog;
 
-namespace Infrastructure.Data.Repository
+namespace Infrastructure.Data
 {
     public class ShopDbContextSeed
     {
@@ -32,6 +31,7 @@ namespace Infrastructure.Data.Repository
 
             }
         }
+
         static IEnumerable<CatalogItem> GetPreconfiguredItems()
         {
             return new List<CatalogItem>()
@@ -47,13 +47,13 @@ namespace Infrastructure.Data.Repository
         {
             return new List<Buyer>()
             {
-                new Buyer() {SubscriptionPlan  = null},
-                new Buyer() {SubscriptionPlan  = null},
-                new Buyer() {SubscriptionPlan  = null},
-                new Buyer() {SubscriptionPlan  = null},
-                new Buyer() {SubscriptionPlan  = SubscriptionPlan.BookClubSubscription},
-                new Buyer() {SubscriptionPlan  = SubscriptionPlan.VideoClubSubscription},
-                new Buyer() {SubscriptionPlan  = SubscriptionPlan.PremiumClubSubscription},
+                new Buyer() { Name= "Test User1", SubscriptionPlan  = null},
+                new Buyer() { Name= "Test User2", SubscriptionPlan  = null},
+                new Buyer() { Name= "Test User3", SubscriptionPlan  = null},
+                new Buyer() { Name= "Test User4", SubscriptionPlan  = null},
+                new Buyer() { Name= "Test User5", SubscriptionPlan  = SubscriptionPlan.BookClubSubscription},
+                new Buyer() { Name= "Test User6", SubscriptionPlan  = SubscriptionPlan.VideoClubSubscription},
+                new Buyer() { Name= "Test User7", SubscriptionPlan  = SubscriptionPlan.PremiumClubSubscription},
             };
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
 using Infrastructure.Core;
 using Infrastructure.Core.Command;
@@ -23,11 +24,17 @@ using ShoppingCart.ApplicationCore.Basket.Handlers.CommandHandlers;
 using ShoppingCart.ApplicationCore.Basket.Handlers.QueryHandlers;
 using ShoppingCart.ApplicationCore.Basket.Handlers.ViewModelGenerators;
 using ShoppingCart.ApplicationCore.Basket.Query;
+using ShoppingCart.ApplicationCore.Buyer;
+using ShoppingCart.ApplicationCore.Buyer.Handlers;
+using ShoppingCart.ApplicationCore.Buyer.Query;
 using ShoppingCart.ApplicationCore.PurchaseOrder.Commands;
 using ShoppingCart.ApplicationCore.PurchaseOrder.Events;
 using ShoppingCart.ApplicationCore.PurchaseOrder.Handlers.CommandHandlers;
 using ShoppingCart.ApplicationCore.PurchaseOrder.Handlers.EventHandlers;
+using ShoppingCart.ApplicationCore.PurchaseOrder.Handlers.QueryHandler;
 using ShoppingCart.ApplicationCore.PurchaseOrder.Handlers.ViewModelGenerators;
+using ShoppingCart.ApplicationCore.PurchaseOrder.Query;
+using ShoppingCart.ApplicationCore.PurchaseOrder.Query.ViewModel;
 
 namespace ShoppingCart.Api
 {
@@ -117,14 +124,23 @@ namespace ShoppingCart.Api
             });
 
             //Query
+            services.AddScoped<IQueryHandler<GetAllBuyers,
+                IReadOnlyList<Buyer>>, GetAllBuyersQueryHandler>();
             services.AddScoped<IQueryHandler<GetBasketByBuyerId,
                 ApplicationCore.Basket.Query.ViewModel.Basket>, BasketQueryHandlers>();
+            services.AddScoped<IQueryHandler<ShippingInvoiceQuery, ShippingInvoice>, GetShippingInvoiceQueryHandler>();
             services.AddScoped<BasketQueryHandlers>();
             services.AddScoped<IQueryBus>(container =>
             {
                 var queryBus = new QueryBus();
-                queryBus.SubscribeAsync(container.GetService<IQueryHandler<GetBasketByBuyerId, ApplicationCore.Basket.Query.ViewModel.Basket>>()).Wait();
+                queryBus.SubscribeAsync(container.GetService<IQueryHandler<GetBasketByBuyerId,
+                    ApplicationCore.Basket.Query.ViewModel.Basket>>()).Wait();
+                queryBus.SubscribeAsync(container.GetService<IQueryHandler<GetAllBuyers,
+                    IReadOnlyList<Buyer>>>()).Wait();
+                queryBus.SubscribeAsync(container.GetService<IQueryHandler<ShippingInvoiceQuery,
+                    ShippingInvoice>>()).Wait();
                 return queryBus;
+                
             });
 
             //logger
@@ -153,7 +169,13 @@ namespace ShoppingCart.Api
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            app.UseCors(cfg =>
+            {
+                cfg.AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowAnyOrigin()
+                    .AllowCredentials();
+            });
             app.UseHttpsRedirection();
             app.UseMvc();
         }

@@ -7,6 +7,6 @@ namespace ShoppingCart.Api.Models
 {
     public class CreateBasketModel
     {
-        public String BuyerId { get; set; }
+        public int BuyerId { get; set; }
     }
 }

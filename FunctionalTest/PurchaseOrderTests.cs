@@ -27,13 +27,13 @@ namespace FunctionalTest
         [Fact]
         public async Task Order_Should_Process_Basket()
         {
-            var _basketModel = new CreateBasketModel { BuyerId = 5 }; 
+            var basketModel = new CreateBasketModel { BuyerId = 5 }; 
             //Crate Basket
-            var response = await Client.PostAsJsonAsync("/api/basket/", _basketModel);
+            var response = await Client.PostAsJsonAsync("/api/basket/", basketModel);
             response.EnsureSuccessStatusCode();
 
             //Get Created Casket
-            var createdBasketResponse = await Client.GetAsync("api/basket/" + _basketModel.BuyerId);
+            var createdBasketResponse = await Client.GetAsync("api/basket/" + basketModel.BuyerId);
             createdBasketResponse.EnsureSuccessStatusCode();
             var basket = await createdBasketResponse.Content.ReadAsAsync<Basket>();
 
