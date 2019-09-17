@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using ShoppingCart.Api;
 
 namespace FunctionalTest
@@ -29,23 +30,25 @@ namespace FunctionalTest
                 var sp = services.BuildServiceProvider();
                 using (var scope = sp.CreateScope())
                 {
+                    var scopedServices = scope.ServiceProvider;
+                    var db = scopedServices.GetRequiredService<ShopDbContext>();
+                    db.Database.EnsureCreated();
+                    var loggerFactory = scopedServices.GetRequiredService<ILoggerFactory>();
+
+                    var logger = scopedServices
+                        .GetRequiredService<ILogger<ShopWebApplicationFactory<TStartup>>>();
                     try
                     {
-                        var scopedServices = scope.ServiceProvider;
-                        var db = scopedServices.GetRequiredService<ShopDbContext>();
-                        db.Database.EnsureCreated();
-
                         ShopDbContextSeed.SeedAsync(db).Wait();
                     }
                     catch (Exception ex)
                     {
-                        //Log Exception
+                        logger.LogError(ex, $"An error occurred seeding the " +
+                                            "database with test messages. Error: {ex.Message}");
                     }
                 }
 
             });
-
-
         }
     }
 }

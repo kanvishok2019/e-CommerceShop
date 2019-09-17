@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using ShoppingCart.ApplicationCore.PurchaseOrder.Domain;
 using Xunit;
 
@@ -25,10 +26,27 @@ namespace ShoppingCart.ApplicationCoreTests.PurchaseOrder
                         "ProductName", "PictureUri"), 5.0M, 5)
             };
 
-            var purchaseOrder = new ApplicationCore.PurchaseOrder.Domain.PurchaseOrder(Guid.NewGuid(),123,12345, address, purchasedItem);
+            var purchaseOrder = new ApplicationCore.PurchaseOrder.Domain.PurchaseOrder(Guid.NewGuid(), 123, 12345, address, purchasedItem);
             var eventObj = purchaseOrder.UnCommittedEvents.FirstOrDefault();
             Assert.Equal("NewPurchaseOrderCreatedEvent", eventObj.GetType().Name);
             Assert.Single(purchaseOrder.UnCommittedEvents);
+        }
+
+        [Fact]
+        public async Task When_Purchase_Order_Process_Request_Should_Process_The_Purchase_Order()
+        {
+            var address = new Address("street", "city", "state", "country", "zipcode");
+            var purchasedItem = new List<PurchaseOrderItem>()
+            {
+                new PurchaseOrderItem(
+                    new CatalogItemOrdered(1, CatalogItemType.Subscription,
+                        "ProductName", "PictureUri"), 5.0M, 5)
+            };
+            var purchaseOrder =
+                new ApplicationCore.PurchaseOrder.Domain.PurchaseOrder(Guid.NewGuid(), 123, 12345, address,
+                    purchasedItem);
+            await purchaseOrder.ProcessPurchaseOrder();
+            Assert.True(purchaseOrder.IsPurchaseOrderProcessed);
         }
     }
 }

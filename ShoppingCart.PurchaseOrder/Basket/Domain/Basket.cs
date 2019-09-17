@@ -68,7 +68,6 @@ namespace ShoppingCart.ApplicationCore.Basket.Domain
         {
             if (itemAddedToBasketEvent == null)
                 return;
-           // _items.Add(itemAddedToBasketEvent.BasketItem);
         }
     }
 }

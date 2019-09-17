@@ -14,15 +14,12 @@ namespace FunctionalTest
 
         public BasketTests(ShopWebApplicationFactory<Startup> factory)
         {
-         
-          
             Client = factory.CreateClient(new WebApplicationFactoryClientOptions
             {
                 AllowAutoRedirect = false
             });
         }
-
-
+        
         [Fact]
         public async Task Create_New_Basket_Should_Create_New_Basket_For_User()
         {
@@ -58,7 +55,6 @@ namespace FunctionalTest
             basket = await afterItemAddedResponse.Content.ReadAsAsync<Basket>();
             Assert.Single(basket.BasketItems);
         }
-
 
     }
 

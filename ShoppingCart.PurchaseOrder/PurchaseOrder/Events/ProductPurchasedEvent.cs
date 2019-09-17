@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Infrastructure.Core.Event;
 using ShoppingCart.ApplicationCore.PurchaseOrder.Domain;
 
@@ -6,7 +7,7 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Events
 {
     public class ProductPurchasedEvent : VersionedEvent
     {
-        public readonly IEnumerable<PurchaseOrderItem> PurchaseOrderList;
+        public readonly List<PurchaseOrderItem> PurchaseOrderList;
         public int PurchaseOrderNo { get;  }
         public int BuyerId { get; }
         public bool IsPurchaseOrderProcessed { get;  }
@@ -15,7 +16,7 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Events
         public ProductPurchasedEvent(int purchasePurchaseOrderNo, int buyerId, IEnumerable<PurchaseOrderItem> purchaseOrderItem,bool isPurchaseOrderProcessed, Address shippingAddress)
         {
             PurchaseOrderNo = purchasePurchaseOrderNo;
-            PurchaseOrderList = purchaseOrderItem;
+            PurchaseOrderList = purchaseOrderItem.ToList();
             BuyerId = buyerId;
             IsPurchaseOrderProcessed = isPurchaseOrderProcessed;
             ShippingAddress = shippingAddress;
