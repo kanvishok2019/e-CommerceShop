@@ -53,7 +53,7 @@ namespace ShoppingCart.Api.Controllers
             await _commandBus.SendAsync(processPurchaseOrderCommand);
 
             var shippingInvoiceQuery = new ShippingInvoiceQuery(purchaseOrderNo);
-            return Ok(_queryBus.SendAsync<ShippingInvoiceQuery, ShippingInvoice>(shippingInvoiceQuery));
+            return Ok(await _queryBus.SendAsync<ShippingInvoiceQuery, ShippingInvoice>(shippingInvoiceQuery));
         }
 
     }

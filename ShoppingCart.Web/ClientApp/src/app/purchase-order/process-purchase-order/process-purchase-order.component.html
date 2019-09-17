@@ -23,10 +23,11 @@
     <mat-card class="purchase-order-card">
       <div fxLayout="row wrap" class="test-data-builder">
         <div fxFlex="150px"><button mat-raised-button color="primary" (click)="buildTestData()" [disabled]="isTestDataAvailable">Build Test Data</button></div>
-        <div fxFlex="auto" class="progress"><mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar></div></div>
+        <div fxFlex="auto" class="progress"><mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar></div>
+      </div>
       <app-buyers [buyers]="buyers"></app-buyers>
       <app-shipping-invoice [shippingInvoice]="shippingInvoice" *ngIf="shippingInvoice"></app-shipping-invoice>
-    
+
     </mat-card>
 
     <div *ngIf="isTestDataAvailable">
