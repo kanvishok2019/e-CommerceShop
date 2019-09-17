@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Infrastructure.Core.Logger
+﻿namespace Infrastructure.Core.Logger
 {
     public interface IAppLogger<T>
     {

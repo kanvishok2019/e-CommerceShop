@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using ShoppingCart.Api.Models;
 using ShoppingCart.ApplicationCore.Basket.Commands;
 using ShoppingCart.ApplicationCore.Basket.Query.ViewModel;

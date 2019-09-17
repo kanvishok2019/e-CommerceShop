@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Infrastructure.Core.Event;
 
 namespace Infrastructure.Core.Domain
@@ -14,7 +13,7 @@ namespace Infrastructure.Core.Domain
         public Queue<IVersionedEvent> UnCommittedEvents { get; }
         public object Key { get; }
         public IAggregateRoot AggregateRoot { get; protected set; }
-        private bool _isUpdateHandlersRegistered = false;
+        private bool _isUpdateHandlersRegistered;
 
         protected EventSourced(object entityKey)
         {
@@ -67,8 +66,7 @@ namespace Infrastructure.Core.Domain
                 _isUpdateHandlersRegistered = true;
             }
 
-            Action<IVersionedEvent> eventHandler;
-            if (_handlers.TryGetValue(versionedEvent.GetType(), out eventHandler))
+            if (_handlers.TryGetValue(versionedEvent.GetType(), out var eventHandler))
             {
                 eventHandler(versionedEvent);
             }

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
-using Infrastructure.Core.EventStore;
-using Microsoft.EntityFrameworkCore;
-
-namespace Infrastructure.Data
+﻿namespace Infrastructure.Data
 {
     //public class EventStoreDbContext: DbContext
     //{

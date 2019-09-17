@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Infrastructure.Core.Domain;
 using Infrastructure.Core.Repository;
@@ -45,7 +43,7 @@ namespace Infrastructure.Data.Repository
 
         public async Task AddAllAsync(List<T> entities)
         {
-           await _dbContext.Set<T>().AddRangeAsync(entities);
+            await _dbContext.Set<T>().AddRangeAsync(entities);
         }
 
         public async Task<int> CountAsync(ISpecification<T> spec)
@@ -53,20 +51,20 @@ namespace Infrastructure.Data.Repository
             return await ApplySpecification(spec).CountAsync();
         }
 
-        public async Task<T> AddAsync(T entity)
+        public T Add(T entity)
         {
             _dbContext.Set<T>().Add(entity);
             return entity;
         }
 
-        public async Task UpdateAsync(T entity)
+        public void Update(T entity)
         {
-            await Task.Run(() => { _dbContext.Entry(entity).State = EntityState.Modified; });
+            _dbContext.Entry(entity).State = EntityState.Modified;
         }
 
         public async Task DeleteAsync(T entity)
         {
-             await Task.Run(() => { _dbContext.Set<T>().Remove(entity); });
+            await Task.Run(() => { _dbContext.Set<T>().Remove(entity); });
         }
 
         private IQueryable<T> ApplySpecification(ISpecification<T> spec)

@@ -1,10 +1,8 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Infrastructure.Core;
 using Microsoft.AspNetCore.Mvc.Testing;
 using ShoppingCart.Api;
-using Microsoft.AspNetCore.Http.Extensions;
 using ShoppingCart.ApplicationCore.Basket.Query.ViewModel;
 using Xunit;
 

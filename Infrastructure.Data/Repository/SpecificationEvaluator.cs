@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using Infrastructure.Core.Domain;
 using Infrastructure.Core.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -19,8 +16,6 @@ namespace Infrastructure.Data.Repository
             {
                 query = query.Where(specification.Criteria);
             }
-
-           
 
             // Includes all expression-based includes
             query = specification.Includes.Aggregate(query,

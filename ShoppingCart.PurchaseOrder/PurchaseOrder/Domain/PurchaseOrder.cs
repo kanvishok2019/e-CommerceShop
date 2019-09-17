@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Ardalis.GuardClauses;
 using Infrastructure.Core.Domain;
 using Infrastructure.Core.Event;
-using ShoppingCart.ApplicationCore.PurchaseOrder.Commands;
 using ShoppingCart.ApplicationCore.PurchaseOrder.Events;
 
 namespace ShoppingCart.ApplicationCore.PurchaseOrder.Domain
@@ -14,6 +13,13 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Domain
     {
         private readonly IDictionary<CatalogItemType, Action<List<PurchaseOrderItem>>> _processors;
         private List<PurchaseOrderItem> _orderItems;
+        public Guid Id { get; private set; }
+        public int PurchaseOderNo { get; private set; }
+        public DateTimeOffset OrderDate { get; } = DateTimeOffset.Now;
+        public int BuyerId { get; private set; }
+        public Address AddressToShip { get; private set; }
+        public IReadOnlyCollection<PurchaseOrderItem> OrderItems => _orderItems.AsReadOnly();
+        public bool IsPurchaseOrderProcessed { get; private set; }
 
         public PurchaseOrder(Guid id, int purchaseOderNo, int buyerId, Address addressToShip,
             List<PurchaseOrderItem> items) : base(id)
@@ -39,15 +45,25 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Domain
             _processors = new Dictionary<CatalogItemType, Action<List<PurchaseOrderItem>>>();
             ApplyUpdate(eventsHistory);
         }
+        public async Task ProcessPurchaseOrder()
+        {
+            RegisterProcessors();
+            await Task.Run(() =>
+            {
+                var catalogItemTypeList = Enum.GetValues(typeof(CatalogItemType));
+                foreach (var catalogItemType in catalogItemTypeList)
+                {
+                    var catalogTypeEnum = (CatalogItemType)catalogItemType;
+                    var processorAsync = GetProcessors(catalogTypeEnum);
+                    var itemsToProcess = OrderItems.Where(x => x.ItemOrdered.CatalogItemType == catalogTypeEnum).ToList();
+                    if (itemsToProcess.Count > 0)
+                        processorAsync(itemsToProcess);
+                }
 
-        public Guid Id { get; private set; }
-        public int PurchaseOderNo { get; private set; }
-        public DateTimeOffset OrderDate { get; } = DateTimeOffset.Now;
-        public int BuyerId { get; private set; }
-        public Address AddressToShip { get; private set; }
+                IsPurchaseOrderProcessed = true;
+            });
+        }
 
-        public IReadOnlyCollection<PurchaseOrderItem> OrderItems => _orderItems.AsReadOnly();
-        public bool IsPurchaseOrderProcessed { get; private set; }
         protected override void RegisterUpdateHandlers()
         {
             RegisterUpdateHandler<NewPurchaseOrderCreatedEvent>(OnNewPurchaseOrderCreated);
@@ -82,26 +98,6 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Domain
         {
             _processors.Add(CatalogItemType.Subscription, SubscriptionProcessors);
             _processors.Add(CatalogItemType.Product, ProductProcessors);
-        }
-
-        public async Task ProcessPurchaseOrder()
-        {
-            RegisterProcessors();
-            await Task.Run(() =>
-            {
-                var catalogItemTypeList = Enum.GetValues(typeof(CatalogItemType));
-                foreach (var catalogItemType in catalogItemTypeList)
-                {
-                    var catalogTypeEnum = (CatalogItemType)catalogItemType;
-                    var processorAsync = GetProcessors(catalogTypeEnum);
-                    var itemsToProcess = OrderItems.Where(x => x.ItemOrdered.CatalogItemType == catalogTypeEnum).ToList();
-                    if (itemsToProcess.Count > 0)
-                        processorAsync(itemsToProcess);
-                }
-
-                IsPurchaseOrderProcessed = true;
-            });
-
         }
 
         private Action<List<PurchaseOrderItem>> GetProcessors(CatalogItemType catalogItemType)

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 using Infrastructure.Core;
 using Infrastructure.Core.Domain;
@@ -56,11 +54,6 @@ namespace Infrastructure.Data.Repository
         private IVersionedEvent Deserialize(EventStore versionedEvent)
         {
             return (IVersionedEvent)_textSerializer.Deserialize(versionedEvent.Payload);
-        }
-
-        public Task Remove<TKey>(TKey aggregateRootKey) where TKey : struct
-        {
-            throw new NotImplementedException();
         }
 
         public async Task SaveAsync(T aggregate)

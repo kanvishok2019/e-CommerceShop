@@ -1,5 +1,4 @@
 ﻿using Infrastructure.Core.Domain;
-using NRules.Fluent.Dsl;
 
 namespace ShoppingCart.ApplicationCore.Buyer
 {

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Infrastructure.Core.Query;
+﻿using Infrastructure.Core.Query;
 using ShoppingCart.ApplicationCore.PurchaseOrder.Query.ViewModel;
 
 namespace ShoppingCart.ApplicationCore.PurchaseOrder.Query

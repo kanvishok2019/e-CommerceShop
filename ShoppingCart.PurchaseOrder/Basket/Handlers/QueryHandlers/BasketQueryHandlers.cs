@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Infrastructure.Core.Query;
 using Infrastructure.Core.Repository;
 using ShoppingCart.ApplicationCore.Basket.Query;
 using ShoppingCart.ApplicationCore.Basket.Query.Specifications;
-using ShoppingCart.ApplicationCore.Basket.Query.ViewModel;
 
 namespace ShoppingCart.ApplicationCore.Basket.Handlers.QueryHandlers
 {

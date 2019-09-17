@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
 using System.Threading.Tasks;
 using Infrastructure.Core.Event;
 using Infrastructure.Core.Repository;
 using ShoppingCart.ApplicationCore.Buyer;
-using ShoppingCart.ApplicationCore.PurchaseOrder.Domain;
 using ShoppingCart.ApplicationCore.PurchaseOrder.Events;
 
 namespace ShoppingCart.ApplicationCore.PurchaseOrder.Handlers.EventHandlers

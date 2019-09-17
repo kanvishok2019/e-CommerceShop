@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Infrastructure.Core.Event;
@@ -32,7 +30,7 @@ namespace ShoppingCart.ApplicationCore.Basket.Handlers.ViewModelGenerators
                 var basketSpecification = new BasketWithItemsSpecification(@event.BasketId);
                 var basket = await _basketItemAsyncRepository.GetSingleAsync(basketSpecification);
                 basket.BasketItems.Add(basketItem);
-                await _basketItemAsyncRepository.UpdateAsync(basket);
+                _basketItemAsyncRepository.Update(basket);
                 await _unitOfWork.SaveChangesAsync();
             }
             catch (Exception ex)

@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace Infrastructure.Core.Domain
+﻿namespace Infrastructure.Core.Domain
 {
     public interface IAggregateRoot: IEventSourced, IEntity
     {

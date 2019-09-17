@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Infrastructure.Core.Domain
+﻿namespace Infrastructure.Core.Domain
 {
     public abstract class AggregateRoot : EventSourced, IAggregateRoot
     {
@@ -11,7 +7,6 @@ namespace Infrastructure.Core.Domain
             Active = true;
             AggregateRoot = this;
         }
-
         public bool Active { get; }
     }
    

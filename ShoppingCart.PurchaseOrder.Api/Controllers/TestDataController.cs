@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Infrastructure.Core.Command;
@@ -33,7 +31,6 @@ namespace ShoppingCart.Api.Controllers
         [HttpPost]
         public async Task Post()
         {
-
             await CreatePurchaseOrder(1, new[] { 1 });
             await CreatePurchaseOrder(2, new[] { 2 });
             await CreatePurchaseOrder(3, new[] { 1, 2 });

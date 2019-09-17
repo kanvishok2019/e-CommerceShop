@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Infrastructure.Data;
-using Infrastructure.Data.Repository;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;

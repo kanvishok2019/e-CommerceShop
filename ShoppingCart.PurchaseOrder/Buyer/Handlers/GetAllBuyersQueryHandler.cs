@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Infrastructure.Core.Command;
 using Infrastructure.Core.Query;
 using Infrastructure.Core.Repository;
-using ShoppingCart.ApplicationCore.Buyer.Commands;
 using ShoppingCart.ApplicationCore.Buyer.Query;
 
 namespace ShoppingCart.ApplicationCore.Buyer.Handlers

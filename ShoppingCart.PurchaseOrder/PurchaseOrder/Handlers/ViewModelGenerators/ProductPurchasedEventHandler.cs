@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Infrastructure.Core.Event;
 using Infrastructure.Core.Repository;
 using ShoppingCart.ApplicationCore.PurchaseOrder.Events;
@@ -21,7 +20,7 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Handlers.ViewModelGenerator
         public async Task HandleAsync(ProductPurchasedEvent @event)
         {
             var shippingInvoice = new ShippingInvoice(@event.PurchaseOrderNo, @event.BuyerId, @event.PurchaseOrderList, @event.ShippingAddress);
-            await _shippingInvoiceRepository.AddAsync(shippingInvoice);
+            _shippingInvoiceRepository.Add(shippingInvoice);
             await _unitOfWork.SaveChangesAsync();
         }
     }

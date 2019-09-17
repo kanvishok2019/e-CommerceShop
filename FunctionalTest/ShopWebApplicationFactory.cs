@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Infrastructure.Core.Command;
 using Infrastructure.Data;
 using Infrastructure.Data.Repository;
 using Microsoft.AspNetCore.Hosting;
@@ -9,8 +6,6 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using ShoppingCart.Api;
-using ShoppingCart.ApplicationCore.Basket.Commands;
-using ShoppingCart.PurchaseOrder.Api;
 
 namespace FunctionalTest
 {

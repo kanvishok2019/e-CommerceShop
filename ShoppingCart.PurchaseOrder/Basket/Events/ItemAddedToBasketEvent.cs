@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Infrastructure.Core.Event;
 using ShoppingCart.ApplicationCore.Basket.Domain;
 

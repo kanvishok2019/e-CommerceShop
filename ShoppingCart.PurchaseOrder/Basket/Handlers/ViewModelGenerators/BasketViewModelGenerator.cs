@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
 using Infrastructure.Core.Event;
 using Infrastructure.Core.Repository;
 using ShoppingCart.ApplicationCore.Basket.Events;
-using ShoppingCart.ApplicationCore.Basket.Query.ViewModel;
 
 namespace ShoppingCart.ApplicationCore.Basket.Handlers.ViewModelGenerators
 {
@@ -26,7 +21,7 @@ namespace ShoppingCart.ApplicationCore.Basket.Handlers.ViewModelGenerators
 
         public async Task HandleAsync(BasketCreatedEvent @event)
         {
-            await _basketAsyncRepository.AddAsync(new Query.ViewModel.Basket
+            _basketAsyncRepository.Add(new Query.ViewModel.Basket
             {
                 BasketId = @event.BasketId,
                 BuyerId = @event.BuyerId

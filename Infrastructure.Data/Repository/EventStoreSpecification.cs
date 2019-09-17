@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Text;
-using Infrastructure.Core.Event;
-using Infrastructure.Core.EventStore;
+﻿using Infrastructure.Core.EventStore;
 using Infrastructure.Core.Repository;
 
 namespace Infrastructure.Data.Repository

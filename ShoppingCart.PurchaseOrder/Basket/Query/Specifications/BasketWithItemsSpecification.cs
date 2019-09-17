@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Infrastructure.Core.Repository;
 
 namespace ShoppingCart.ApplicationCore.Basket.Query.Specifications

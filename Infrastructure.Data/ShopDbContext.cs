@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
+﻿using System.Reflection;
 using Infrastructure.Core.EventStore;
 using Microsoft.EntityFrameworkCore;
 using ShoppingCart.ApplicationCore.Basket.Query.ViewModel;

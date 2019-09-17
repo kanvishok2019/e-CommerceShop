@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
 using Infrastructure.Core.Command;
 using Infrastructure.Core.Query;
@@ -11,7 +8,7 @@ using ShoppingCart.ApplicationCore.Basket.Commands;
 using ShoppingCart.ApplicationCore.Basket.Query;
 using ShoppingCart.ApplicationCore.Basket.Query.ViewModel;
 
-namespace ShoppingCart.PurchaseOrder.Api.Controllers
+namespace ShoppingCart.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

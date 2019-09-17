@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ShoppingCart.ApplicationCore.Catalog
+﻿namespace ShoppingCart.ApplicationCore.Catalog
 {
     public enum CatalogType
     {

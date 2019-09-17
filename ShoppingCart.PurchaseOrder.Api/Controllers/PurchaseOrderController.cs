@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
 using Infrastructure.Core.Command;
 using Infrastructure.Core.Query;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using ShoppingCart.Api.Models;
 using ShoppingCart.ApplicationCore.PurchaseOrder.Commands;
 using ShoppingCart.ApplicationCore.PurchaseOrder.Domain;
@@ -20,35 +18,42 @@ namespace ShoppingCart.Api.Controllers
     {
         private readonly ICommandBus _commandBus;
         private readonly IQueryBus _queryBus;
-        private readonly IMapper _autoMapper;
+        private readonly ILogger<PurchaseOrderController> _logger;
 
-        public PurchaseOrderController(ICommandBus commandBus, IMapper autoMapper, IQueryBus queryBus)
+        public PurchaseOrderController(ICommandBus commandBus, IQueryBus queryBus, ILogger<PurchaseOrderController> logger)
         {
             _commandBus = commandBus;
-            _autoMapper = autoMapper;
             _queryBus = queryBus;
+            _logger = logger;
         }
 
-     
+
         [HttpPost]
         public async Task Post([FromBody] CreatePurchaseOrderModel createPurchaseOrderModel)
         {
-            //Assumption: We call an API Or we Get Address From User
+            _logger.LogInformation($"Create purchase order requested for basket {createPurchaseOrderModel.BasketId}");
 
-            var shippingAddress = new Address("126 BowhillWay","Harlow",
-                "Essex","United Kingdom","CM20 2FH");
+            //Assumption: We call an API Or we get Address From User
+            var shippingAddress = new Address("126 BowhillWay", "Harlow",
+                "Essex", "United Kingdom", "CM20 2FH");
             var crateOrderCommand = new CreatePurchaseOrderCommand(Guid.Parse(createPurchaseOrderModel.BasketId), shippingAddress);
             await _commandBus.SendAsync(crateOrderCommand);
         }
 
         [HttpPost("{purchaseOrderNo}/process")]
-        public async Task<ShippingInvoice> Post(int purchaseOrderNo)
+        public async Task<IActionResult> Post(int purchaseOrderNo)
         {
+            if (purchaseOrderNo == 0)
+            {
+                _logger.LogError("Purchase order number is required to process the purchase order");
+                return BadRequest();
+            }
+            _logger.LogInformation($"Purchase order process requested for purchase order no {purchaseOrderNo}");
             var processPurchaseOrderCommand = new ProcessPurchaseOrderCommand(purchaseOrderNo);
             await _commandBus.SendAsync(processPurchaseOrderCommand);
 
             var shippingInvoiceQuery = new ShippingInvoiceQuery(purchaseOrderNo);
-           return  await _queryBus.SendAsync<ShippingInvoiceQuery, ShippingInvoice>(shippingInvoiceQuery);
+            return Ok(await _queryBus.SendAsync<ShippingInvoiceQuery, ShippingInvoice>(shippingInvoiceQuery));
         }
 
     }

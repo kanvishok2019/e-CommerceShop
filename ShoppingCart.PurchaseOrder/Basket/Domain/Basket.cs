@@ -10,6 +10,11 @@ namespace ShoppingCart.ApplicationCore.Basket.Domain
 {
     public sealed class Basket : AggregateRoot
     {
+        public Guid Id { get; private set; }
+        public int BuyerId { get; private set; }
+        private readonly List<BasketItem> _items = new List<BasketItem>();
+        public IReadOnlyCollection<BasketItem> Items => _items.AsReadOnly();
+
         public Basket(Guid id, int buyerId) : base(id)
         {
             Guard.Against.Null(id, nameof(id));
@@ -22,10 +27,7 @@ namespace ShoppingCart.ApplicationCore.Basket.Domain
         {
             ApplyUpdate(eventsHistory);
         }
-        public Guid Id { get; private set; }
-        public int BuyerId { get; private set; }
-        private readonly List<BasketItem> _items = new List<BasketItem>();
-        public IReadOnlyCollection<BasketItem> Items => _items.AsReadOnly();
+       
 
         public void AddItem(int catalogItemId, decimal unitPrice, int quantity = 1)
         {
@@ -50,6 +52,7 @@ namespace ShoppingCart.ApplicationCore.Basket.Domain
         protected override void RegisterUpdateHandlers()
         {
             RegisterUpdateHandler<BasketCreatedEvent>(OnBasketCreatedEvent);
+            RegisterUpdateHandler<ItemAddedToBasketEvent>(OnItemAddedToBasketEvent);
         }
 
         private void OnBasketCreatedEvent(BasketCreatedEvent basketCreatedEvent)
@@ -61,12 +64,11 @@ namespace ShoppingCart.ApplicationCore.Basket.Domain
             Id = basketCreatedEvent.BasketId;
             BuyerId = basketCreatedEvent.BuyerId;
         }
-
         private void OnItemAddedToBasketEvent(ItemAddedToBasketEvent itemAddedToBasketEvent)
         {
             if (itemAddedToBasketEvent == null)
                 return;
-            _items.Add(itemAddedToBasketEvent.BasketItem);
+           // _items.Add(itemAddedToBasketEvent.BasketItem);
         }
     }
 }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Infrastructure.Core.Command;
 using Infrastructure.Core.Repository;
 using ShoppingCart.ApplicationCore.PurchaseOrder.Commands;
@@ -13,14 +10,13 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Handlers.CommandHandlers
     {
         private readonly IAggregateRepositoryService<Domain.PurchaseOrder> _shopAggregateRepositoryService;
         private readonly IAsyncRepository<PurchaseOrderIdNumberMapping> _purchaseOrderIdNumberMappingAsyncRepository;
-        private readonly IUnitOfWork _unitOfWork;
 
         public ProcessPurchaseOrderCommandHandler(IUnitOfWork unitOfWork, IAggregateRepositoryService<Domain.PurchaseOrder> shopAggregateRepositoryService)
         {
-            _unitOfWork = unitOfWork;
+
             _shopAggregateRepositoryService = shopAggregateRepositoryService;
             _purchaseOrderIdNumberMappingAsyncRepository =
-                _unitOfWork.GetRepositoryAsync<PurchaseOrderIdNumberMapping>();
+            unitOfWork.GetRepositoryAsync<PurchaseOrderIdNumberMapping>();
         }
 
         public async Task HandleAsync(ProcessPurchaseOrderCommand command)
@@ -31,7 +27,7 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Handlers.CommandHandlers
             if (!purchaseOrder.IsPurchaseOrderProcessed && purchaseOrder.OrderItems.Count > 0)
             {
                 await purchaseOrder.ProcessPurchaseOrder();
-                
+
                 await _shopAggregateRepositoryService.SaveAsync(purchaseOrder);
             }
 

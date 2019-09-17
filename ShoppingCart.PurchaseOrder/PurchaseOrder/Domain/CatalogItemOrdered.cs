@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Ardalis.GuardClauses;
+﻿using Ardalis.GuardClauses;
 using Infrastructure.Core.Domain;
 
 namespace ShoppingCart.ApplicationCore.PurchaseOrder.Domain

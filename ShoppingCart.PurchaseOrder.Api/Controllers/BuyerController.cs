@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Infrastructure.Core.Query;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using ShoppingCart.ApplicationCore.Basket.Query;
 using ShoppingCart.ApplicationCore.Buyer;
 using ShoppingCart.ApplicationCore.Buyer.Query;
 using IMapper = AutoMapper.IMapper;
