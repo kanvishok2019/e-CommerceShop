@@ -31,6 +31,7 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Handlers.CommandHandlers
             if (!purchaseOrder.IsPurchaseOrderProcessed && purchaseOrder.OrderItems.Count > 0)
             {
                 await purchaseOrder.ProcessPurchaseOrder();
+                
                 await _shopAggregateRepositoryService.SaveAsync(purchaseOrder);
             }
 

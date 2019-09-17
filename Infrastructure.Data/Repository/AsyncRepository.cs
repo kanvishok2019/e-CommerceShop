@@ -28,6 +28,11 @@ namespace Infrastructure.Data.Repository
             return await ApplySpecification(spec).SingleAsync();
         }
 
+        public async Task<T> FirstOrDefaultAsync(ISpecification<T> spec)
+        {
+            return await ApplySpecification(spec).FirstOrDefaultAsync();
+        }
+
         public async Task<IReadOnlyList<T>> ListAllAsync()
         {
             return await _dbContext.Set<T>().ToListAsync();

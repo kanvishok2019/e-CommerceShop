@@ -1,6 +1,35 @@
-
-  <div>{{shippingInvoice.purchaseOrderNo}}</div>
-  <div *ngFor="let item of shippingInvoice.purchasedItems">
-    {{item.itemOrdered.productName}}
+<div class="invoice">
+  <div fxLayout="row">
+    <div fxFlex="65">
+      <div>
+        <h3>Galleria e-commerce shop</h3>
+        <div>CompanyAddressLine1</div>
+        <div>City, County, PostCode</div>
+        <div>Phone:07921528828</div>
+        <div>Website:www.Galleria.com</div>
+        <div>Purchase Order No: {{shippingInvoice.purchaseOrderNo}}</div>
+      </div>
+    </div>
+    <div fxFlex="35"> <h1>INVOICE</h1> </div>
   </div>
 
+  <div>
+    <div>{{shippingInvoice.street}}</div>
+    <div>{{shippingInvoice.city}}</div>
+    <div>{{shippingInvoice.county}}</div>
+    <div>{{shippingInvoice.country}}</div>
+    <div>{{shippingInvoice.postcode}}</div>
+  </div>
+
+  <div *ngFor="let item of shippingInvoice.purchasedItems;let index = index;">
+    <div fxLayout="row">
+      <div fxFlex="10">
+        {{index +1 }}.
+      </div>
+      <div fxFlex="90">
+        {{item.itemOrdered.productName}}
+      </div>
+    </div>
+  </div>
+  <div>Total: {{shippingInvoice.total}}</div>
+</div>

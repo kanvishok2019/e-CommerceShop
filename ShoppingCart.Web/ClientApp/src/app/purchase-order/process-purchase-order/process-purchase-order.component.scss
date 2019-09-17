@@ -1,15 +1,21 @@
-.app-title {
-  padding-left: 16px;
-}
-
-.purchase-order-card {
-  max-width: 1024px;
+.purchase-order-process {
   margin: 100px auto auto auto;
-}
+  padding:16px;
+  max-width: 1440px;
 
-.test-data-builder {
-  width: 100%;
-}
-.progress{
-  margin:auto;
+  .app-title {
+    padding-left: 16px;
+  }
+
+  .purchase-order-card {     
+   
+  }
+
+  .test-data-builder {
+    width: 100%;
+  }
+
+  .progress {
+    margin: auto;
+  }
 }

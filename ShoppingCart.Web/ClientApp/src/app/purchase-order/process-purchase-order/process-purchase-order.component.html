@@ -5,15 +5,40 @@
   </mat-toolbar-row>
 </mat-toolbar>
 
-<mat-card class="purchase-order-card">
-  <div fxLayout="row wrap" class="test-data-builder">
-    <div fxFlex="150px"><button mat-raised-button color="primary" (click)="buildTestData()">Build Test Data</button></div>
-    <div fxFlex="auto" class="progress"><mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar></div>
+<div fxLayout="row" class="purchase-order-process" fxLayoutGap="16px">
+  <div fxFlex="250px">
+    <mat-card>
+      <form [formGroup]="purchaseOrderForm">
+        <mat-form-field #userId fxFlex>
+          <input matInput placeholder="Enter purchase order no" formControlName="purchaseOrderNo" type="number">
+          <mat-error *ngIf="hasError('purchaseOrderNo', 'required')">Purchase Order No Id is required</mat-error>
+        </mat-form-field>
+      </form>
+      <div>
+        <button mat-raised-button color="primary" (click)="processPurchaseOrder()" [disabled]="!purchaseOrderForm.valid"> Process Purchase Order</button>
+      </div>
+    </mat-card>
   </div>
-  <h2>Buyers</h2>
-  <app-buyers [buyers]="buyers"></app-buyers>
+  <div fxFlex="auto">
+    <mat-card class="purchase-order-card">
+      <div fxLayout="row wrap" class="test-data-builder">
+        <div fxFlex="150px"><button mat-raised-button color="primary" (click)="buildTestData()" [disabled]="isTestDataAvailable">Build Test Data</button></div>
+        <div fxFlex="auto" class="progress"><mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar></div></div>
+      <app-buyers [buyers]="buyers"></app-buyers>
+      <app-shipping-invoice [shippingInvoice]="shippingInvoice" *ngIf="shippingInvoice"></app-shipping-invoice>
+    
+    </mat-card>
 
-  <app-shipping-invoice [shippingInvoice]="shippingInvoice" *ngIf="shippingInvoice"></app-shipping-invoice>
-  <button (click)="processPurchaseOrder(1)">Process PurchaseOrder 1</button>
-  <button (click)="processPurchaseOrder(2)">Process PurchaseOrder 2</button>
-</mat-card>
+    <div>
+      <div>Purchase Order No: 1 =>  Test User 1 has purchased only Book Club Membership, No Book or Video product</div>
+      <div>Purchase Order No: 2 =>  Test User 2 has purchased only Video Club Membership, No video Book or Video product</div>
+      <div>Purchase Order No: 3 =>  Test User 3 has purchased both Video and book Club Membership, So it should be set to premium</div>
+      <div>Purchase Order No: 4 =>  Test User 4 has purchased both Video and book Club Membership, So it should be set to premium, Also purchased Book and Video</div>
+      <div>Purchase Order No: 5 =>  Test User 5 has already has Book Club, they purchased video club membership product, so it should be set to premium, Also purchased Book and Video products, Shipping invoice will get generated for these 2 products</div>
+      <div>Purchase Order No: 6 =>  Test User 5 has already has Video Club, they purchased book club membership product, so it should be set to premium, Also purchased Book and Video products, Shipping invoice will get generated for these 2 products</div>
+      <div>Purchase Order No: 7 =>  Test User 5 has already has Premium Club, Also  Video product, Shipping invoice will get generated for video product</div>
+    </div>
+  </div>
+</div>
+
+

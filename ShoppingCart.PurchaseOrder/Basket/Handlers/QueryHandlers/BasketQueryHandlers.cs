@@ -22,7 +22,7 @@ namespace ShoppingCart.ApplicationCore.Basket.Handlers.QueryHandlers
         public async Task<Query.ViewModel.Basket> HandleAsync(GetBasketByBuyerId query)
         {
             var basketWithItemSpecification = new BasketWithItemsSpecification(query.BuyerId);
-            return await _basketVieModelRepository.GetSingleAsync(basketWithItemSpecification);
+            return await _basketVieModelRepository.FirstOrDefaultAsync(basketWithItemSpecification);
         }
     }
 }

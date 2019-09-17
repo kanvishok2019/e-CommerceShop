@@ -6,6 +6,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 
 import { PurchaseOrderRoutingModule } from './purchase-order-routing.module';
 import { ProcessPurchaseOrderComponent } from './process-purchase-order/process-purchase-order.component';
@@ -23,6 +26,10 @@ import { ShippingInvoiceComponent } from './shipping-invoice/shipping-invoice.co
     MatButtonModule,
     MatProgressBarModule,
     FlexLayoutModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule,
     PurchaseOrderRoutingModule
   ]
 })

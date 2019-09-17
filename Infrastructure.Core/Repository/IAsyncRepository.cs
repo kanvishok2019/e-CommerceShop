@@ -9,6 +9,7 @@ namespace Infrastructure.Core.Repository
     {
         Task<T> GetByIdAsync(int id);
         Task<T> GetSingleAsync(ISpecification<T> spec);
+        Task<T> FirstOrDefaultAsync(ISpecification<T> spec);
         Task<IReadOnlyList<T>> ListAllAsync();
         Task<IReadOnlyList<T>> ListAsync(ISpecification<T> spec);
         Task AddAllAsync(List<T> entities);

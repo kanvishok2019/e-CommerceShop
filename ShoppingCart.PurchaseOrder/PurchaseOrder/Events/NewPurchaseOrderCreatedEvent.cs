@@ -11,12 +11,14 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Events
         public int PurchaseOrderNo { get; }
         public IEnumerable<PurchaseOrderItem> PurchaseOrderItems { get; }
         public int BuyerId { get; }
-        public NewPurchaseOrderCreatedEvent(int buyerId, Guid purchaseOrderId, int purchaseOrderNo, IEnumerable<PurchaseOrderItem> purchaseOrderItems)
+        public Address AddressToShip { get; }
+        public NewPurchaseOrderCreatedEvent(int buyerId, Guid purchaseOrderId, int purchaseOrderNo, IEnumerable<PurchaseOrderItem> purchaseOrderItems, Address addressToShip)
         {
             BuyerId = buyerId;
             PurchaseOrderId = purchaseOrderId;
             PurchaseOrderNo = purchaseOrderNo;
             PurchaseOrderItems = purchaseOrderItems;
+            AddressToShip = addressToShip;
         }
     }
 }

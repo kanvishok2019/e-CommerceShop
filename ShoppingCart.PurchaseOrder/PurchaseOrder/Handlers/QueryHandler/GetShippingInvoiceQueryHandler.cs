@@ -22,7 +22,7 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Handlers.QueryHandler
         public async Task<ShippingInvoice> HandleAsync(ShippingInvoiceQuery query)
         {
             var shippingInvoiceSpecification = new ShippingInvoiceSpecification(query.PurchaseOrderNo);
-            return await _shippingInvoiceAsyncRepository.GetSingleAsync(shippingInvoiceSpecification);
+            return await _shippingInvoiceAsyncRepository.FirstOrDefaultAsync(shippingInvoiceSpecification);
         }
     }
 }

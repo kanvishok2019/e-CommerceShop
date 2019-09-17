@@ -25,10 +25,10 @@ export class TestDataService {
   //  return this._apiService.add(url, { 'buyerId': buyerId });
   //}
 
-  //getBasket(buyerId: number) {
-  //  var url = environment.basketApi.basket;
-  //  return this._apiService.get<Basket>(url + buyerId);
-  //}
+  getBasket(buyerId: number) {
+    var url = environment.basketApi.basket;
+    return this._apiService.get<Basket>(url + buyerId);
+  }
 
   //addItemToBasket(basketItemModel: BasketItemPostModel) {
   //  var url = environment.basketApi.basket;

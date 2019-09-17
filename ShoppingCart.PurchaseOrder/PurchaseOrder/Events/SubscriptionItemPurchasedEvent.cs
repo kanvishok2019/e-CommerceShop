@@ -11,11 +11,13 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Events
         public readonly IEnumerable<PurchaseOrderItem> PurchaseOrderList;
         public int PurchaseOrderNo { get; }
         public int BuyerId { get; }
-        public SubscriptionItemPurchasedEvent(int purchasePurchaseOrderNo, int buyerId, IEnumerable<PurchaseOrderItem> purchaseOrderItem)
+        public bool IsPurchaseOrderProcessed { get; }
+        public SubscriptionItemPurchasedEvent(int purchasePurchaseOrderNo, int buyerId, IEnumerable<PurchaseOrderItem> purchaseOrderItem, bool isPurchaseOrderProcessed)
         {
             PurchaseOrderNo = purchasePurchaseOrderNo;
             BuyerId = buyerId;
             PurchaseOrderList = purchaseOrderItem;
+            IsPurchaseOrderProcessed = isPurchaseOrderProcessed;
         }
     }
 }

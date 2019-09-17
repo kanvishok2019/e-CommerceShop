@@ -30,7 +30,7 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Domain
             AddressToShip = addressToShip;
             _orderItems = items;
             _processors = new Dictionary<CatalogItemType, Action<List<PurchaseOrderItem>>>();
-            AddEvent(new NewPurchaseOrderCreatedEvent(BuyerId, id, purchaseOderNo, _orderItems));
+            AddEvent(new NewPurchaseOrderCreatedEvent(BuyerId, id, purchaseOderNo, _orderItems, addressToShip));
         }
 
         public PurchaseOrder(Guid id, IEnumerable<IVersionedEvent> eventsHistory) : base(id)
@@ -44,7 +44,7 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Domain
         public int PurchaseOderNo { get; private set; }
         public DateTimeOffset OrderDate { get; } = DateTimeOffset.Now;
         public int BuyerId { get; private set; }
-        public Address AddressToShip { get; }
+        public Address AddressToShip { get; private set; }
 
         public IReadOnlyCollection<PurchaseOrderItem> OrderItems => _orderItems.AsReadOnly();
         public bool IsPurchaseOrderProcessed { get; private set; }
@@ -65,14 +65,17 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Domain
             Id = newPurchaseOrderCreatedEvent.PurchaseOrderId;
             BuyerId = newPurchaseOrderCreatedEvent.BuyerId;
             PurchaseOderNo = newPurchaseOrderCreatedEvent.PurchaseOrderNo;
-            _orderItems  = newPurchaseOrderCreatedEvent.PurchaseOrderItems.ToList();
+            _orderItems = newPurchaseOrderCreatedEvent.PurchaseOrderItems.ToList();
+            AddressToShip = newPurchaseOrderCreatedEvent.AddressToShip;
         }
 
         private void OnProductPurchasedEvent(ProductPurchasedEvent productPurchasedEvent)
         {
+            IsPurchaseOrderProcessed = productPurchasedEvent.IsPurchaseOrderProcessed;
         }
         private void OnSubscriptionItemPurchasedEvent(SubscriptionItemPurchasedEvent subscriptionItemPurchasedEvent)
         {
+            IsPurchaseOrderProcessed = subscriptionItemPurchasedEvent.IsPurchaseOrderProcessed;
         }
 
         private void RegisterProcessors()
@@ -110,12 +113,12 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Domain
 
         private void SubscriptionProcessors(IEnumerable<PurchaseOrderItem> purchaseOrderItem)
         {
-            AddEvent(new SubscriptionItemPurchasedEvent(PurchaseOderNo, BuyerId, purchaseOrderItem));
+            AddEvent(new SubscriptionItemPurchasedEvent(PurchaseOderNo, BuyerId, purchaseOrderItem, true));
         }
 
         private void ProductProcessors(IEnumerable<PurchaseOrderItem> purchaseOrderItem)
         {
-            AddEvent(new ProductPurchasedEvent(PurchaseOderNo, BuyerId, purchaseOrderItem));
+            AddEvent(new ProductPurchasedEvent(PurchaseOderNo, BuyerId, purchaseOrderItem, true, AddressToShip));
         }
 
     }

@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\purchase-order\models\address.ts" />
     <None Remove="ClientApp\src\app\purchase-order\models\basket-item-post.ts" />
     <None Remove="ClientApp\src\app\purchase-order\models\basket.ts" />
     <None Remove="ClientApp\src\app\purchase-order\models\buyer.ts" />
@@ -36,6 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\purchase-order\models\address.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\purchase-order\models\basket-item-post.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\purchase-order\models\basket.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\purchase-order\models\buyer.ts" />

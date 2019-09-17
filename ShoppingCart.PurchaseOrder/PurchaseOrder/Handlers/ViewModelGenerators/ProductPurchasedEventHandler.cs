@@ -7,7 +7,7 @@ using ShoppingCart.ApplicationCore.PurchaseOrder.Query.ViewModel;
 
 namespace ShoppingCart.ApplicationCore.PurchaseOrder.Handlers.ViewModelGenerators
 {
-    public class ShippingInvoiceViewModelGenerator:IEventHandler<ProductPurchasedEvent>
+    public class ShippingInvoiceViewModelGenerator : IEventHandler<ProductPurchasedEvent>
     {
         private readonly IAsyncRepository<ShippingInvoice> _shippingInvoiceRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -20,7 +20,7 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Handlers.ViewModelGenerator
 
         public async Task HandleAsync(ProductPurchasedEvent @event)
         {
-            var shippingInvoice = new ShippingInvoice(@event.PurchaseOrderNo, @event.BuyerId, @event.PurchaseOrderList);
+            var shippingInvoice = new ShippingInvoice(@event.PurchaseOrderNo, @event.BuyerId, @event.PurchaseOrderList, @event.ShippingAddress);
             await _shippingInvoiceRepository.AddAsync(shippingInvoice);
             await _unitOfWork.SaveChangesAsync();
         }

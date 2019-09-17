@@ -44,7 +44,7 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Handlers.EventHandlers
             {
                 if (_subscriptionCatalogMapping.TryGetValue(existingSubscriptionPlan.Value, out var purchasedProduct))
                 {
-                    purchasedProduct = purchasedProduct.Append(catalogItemId).ToArray();
+                    purchasedProduct = purchasedProduct.Append(catalogItemId).OrderBy(x => x).ToArray();
                     
                     var newPlanMapping = _subscriptionCatalogMapping.FirstOrDefault(x => x.Value.SequenceEqual(purchasedProduct));
 

@@ -33,15 +33,14 @@ namespace ShoppingCart.Api.Controllers
         [HttpPost]
         public async Task Post()
         {
-            await CreatePurchaseOrder(1, new[] { 1, 3, 4 });
 
-            //await CreatePurchaseOrder(1, new[] { 1 });
-            //await CreatePurchaseOrder(2, new[] { 2 });
-            //await CreatePurchaseOrder(3, new[] { 1, 2 });
-            //await CreatePurchaseOrder(4, new[] { 1, 2, 3, 4 });
-            //await CreatePurchaseOrder(5, new[] { 2, 3, 4 });
-            //await CreatePurchaseOrder(6, new[] { 1, 3, 4 });
-            //await CreatePurchaseOrder(7, new[] { 4 });
+            await CreatePurchaseOrder(1, new[] { 1 });
+            await CreatePurchaseOrder(2, new[] { 2 });
+            await CreatePurchaseOrder(3, new[] { 1, 2 });
+            await CreatePurchaseOrder(4, new[] { 1, 2, 3, 4 });
+            await CreatePurchaseOrder(5, new[] { 2, 3, 4 });
+            await CreatePurchaseOrder(6, new[] { 1, 3, 4 });
+            await CreatePurchaseOrder(7, new[] { 4 });
         }
 
         private async Task CreatePurchaseOrder(int buyerId, int[] catalogItemIds)
