@@ -63,6 +63,7 @@ export class ProcessPurchaseOrderComponent implements OnInit {
       console.log(this.shippingInvoice);
       await this.getBuyersData();
       this.isLoading = false;
+      this.purchaseOrderForm.controls['purchaseOrderNo'].setValue("");
     });
   }
 

@@ -13,7 +13,7 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Query.ViewModel
             PurchasedItems = purchasedItems;
             BuyerId = buyerId;
             ShippingAddress = shippingAddress;
-            Total = 100; //PurchasedItems.Sum(x => x.UnitPrice);
+            Total = PurchasedItems.Sum(x => x.UnitPrice);
         }
 
         //Note: For Entity framework

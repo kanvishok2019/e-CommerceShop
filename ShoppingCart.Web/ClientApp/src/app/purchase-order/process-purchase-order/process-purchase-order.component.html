@@ -6,7 +6,7 @@
 </mat-toolbar>
 
 <div fxLayout="row" class="purchase-order-process" fxLayoutGap="16px">
-  <div fxFlex="250px">
+  <div fxFlex="250px" *ngIf="isTestDataAvailable">
     <mat-card>
       <form [formGroup]="purchaseOrderForm">
         <mat-form-field #userId fxFlex>
@@ -29,7 +29,7 @@
     
     </mat-card>
 
-    <div>
+    <div *ngIf="isTestDataAvailable">
       <div>Purchase Order No: 1 =>  Test User 1 has purchased only Book Club Membership, No Book or Video product</div>
       <div>Purchase Order No: 2 =>  Test User 2 has purchased only Video Club Membership, No video Book or Video product</div>
       <div>Purchase Order No: 3 =>  Test User 3 has purchased both Video and book Club Membership, So it should be set to premium</div>
