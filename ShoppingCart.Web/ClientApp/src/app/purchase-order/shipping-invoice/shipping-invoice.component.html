@@ -1,6 +1,6 @@
 
   <div>{{shippingInvoice.purchaseOrderNo}}</div>
   <div *ngFor="let item of shippingInvoice.purchasedItems">
-    {{itemOrdered.name}}
+    {{item.itemOrdered.productName}}
   </div>
 

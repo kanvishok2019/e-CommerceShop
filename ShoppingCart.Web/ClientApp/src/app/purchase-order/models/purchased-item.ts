@@ -1,7 +1,7 @@
 import { CatalogItemOrdered } from './catalog-item-ordered';
 
 export interface PurchasedItem {
-  catalogItemOrdered: CatalogItemOrdered;
+  itemOrdered: CatalogItemOrdered;
   unitPrice: number;
   units: number;
 }
