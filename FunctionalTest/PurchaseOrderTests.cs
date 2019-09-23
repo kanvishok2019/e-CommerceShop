@@ -142,10 +142,10 @@ namespace FunctionalTest
 
             //Verify Invoice
             var shippingInvoice = await processOrderResponse.Content.ReadAsAsync<ShippingInvoice>();
-         
-            //Issue: Unable to deserialize the ShippingInvoice for some reason
-            //var itemInInvoice = shippingInvoice.PurchasedItems.FirstOrDefault(o => o.ItemOrdered.CatalogItemId == 3);
-            //Assert.Equal(3, itemInInvoice.ItemOrdered.CatalogItemId);
+
+ 
+            var itemInInvoice = shippingInvoice.PurchasedItems.FirstOrDefault(o => o.ItemOrdered.CatalogItemId == 3);
+            Assert.Equal(3, itemInInvoice.ItemOrdered.CatalogItemId);
         }
 
     }

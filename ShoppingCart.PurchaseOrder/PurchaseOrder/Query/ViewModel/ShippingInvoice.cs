@@ -21,11 +21,11 @@ namespace ShoppingCart.ApplicationCore.PurchaseOrder.Query.ViewModel
         {
 
         }
-        public int PurchaseOrderNo { get; }
-        public int BuyerId { get; }
-        public IEnumerable<PurchaseOrderItem> PurchasedItems { get; }
-        public Address ShippingAddress { get; }
-        public decimal Total { get; }
+        public int PurchaseOrderNo { get;  set; }
+        public int BuyerId { get; set; }
+        public IEnumerable<PurchaseOrderItem> PurchasedItems { get; set; }
+        public Address ShippingAddress { get; set; }
+        public decimal Total { get;  set; }
 
     }
 }

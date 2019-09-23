@@ -1,8 +1,9 @@
 ﻿using System;
+using Infrastructure.Core.Domain;
 
 namespace ShoppingCart.ApplicationCore.PurchaseOrder.Domain
 {
-    public class Address  
+    public class Address  :BaseEntity
     {
         public String Street { get; private set; }
 
